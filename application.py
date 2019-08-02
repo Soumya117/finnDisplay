@@ -61,15 +61,10 @@ def renderGraph():
     prices = multiplePris.jsonToHtml()
     soldHouses = sold.jsonToHtml()
     tabs1 = tabs.jsonToHtml()
-    tabs1 = tabs1.format(price=prices,
+    tabs1 = tabs1.format(
+                  realestates=realestates,
+                  price=prices,
                   soldHouses=soldHouses,
                   plot_url_links=graphLinks(),
                   plot_url_sold= graphSold())
-    print(tabs1)
-    # return render_template('graph.html',
-    #                        plot_url_links=graphLinks(),
-    #                        plot_url_sold=graphSold(),
-    #                        realestates=realestates,
-    #                        price=prices,
-    #                        soldHouses=soldHouses)
     return tabs1

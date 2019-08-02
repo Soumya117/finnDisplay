@@ -1,7 +1,7 @@
 import json
 
 def jsonToHtml():
-    tstr1 ="""Content-type: text/html\n\n
+    tstr1 ="""
     <table>
     <thead bgcolor="#00001a">
     <tr>

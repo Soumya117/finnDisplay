@@ -35,8 +35,8 @@ def jsonToHtml():
   <title>Finn RealEstate Data</title>
   <h2>Finn Data</h2>
   <div id="graph">
-      <img src="data:image/png;base64, {{ plot_url_links }}">
-      <img src="data:image/png;base64, {{ plot_url_sold }}">
+      <img src="data:image/png;base64, {plot_url_links}">
+      <img src="data:image/png;base64, {plot_url_sold}">
   </div>
 </head>
 <body>
@@ -48,7 +48,7 @@ def jsonToHtml():
 </div>
 
 <div id="RealEstates" class="tabcontent">
-Realesates
+{realestates}
 </div>
 
 <div id="Price" class="tabcontent">
@@ -60,20 +60,20 @@ Realesates
 </div>
 
 <script>
-function openCity(evt, cityName) {
+function openCity(evt, cityName) {{
   console.log("Calling open city..")
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
+  for (i = 0; i < tabcontent.length; i++) {{
     tabcontent[i].style.display = "none";
-  }
+  }}
   tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
+  for (i = 0; i < tablinks.length; i++) {{
     tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
+  }}
   document.getElementById(cityName).style.display = "block";
   evt.currentTarget.className += " active";
-}
+}}
 </script>
 </body>
 </html>"""
