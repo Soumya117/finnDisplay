@@ -7,7 +7,6 @@ def jsonToHtml():
 .tab {{
   overflow: hidden;
   border: 1px solid #ccc;
-  background-color: #f1f1f1;
 }}
 .tabcontent {{
   animation: fadeEffect 1s; /* Fading effect takes 1 second */
@@ -19,18 +18,23 @@ def jsonToHtml():
   to {{opacity: 1;}}
 }}
 .tab button {{
-  background-color: inherit;
   float: left;
   border: none;
   outline: none;
   cursor: pointer;
   padding: 14px 16px;
-  transition: 0.3s;
-  font-size: 17px;
+  background-color: #3d5c5c;
+  font-size: 120%;
+  color: #000000;
+  font-weight: 700;
 }}
 .tab button:hover {{
   background-color: #ddd;
 }}
+h1 {{
+  background-color: #3d5c5c;
+  color: #e6f3ff
+ }}
 .tab button.active {{
   background-color: #ccc;
 }}
@@ -42,16 +46,18 @@ def jsonToHtml():
   max-height: 300px;
   overflow-y: scroll;
 }}
+#graph {{
+}}
 </style>
   <title>Finn RealEstate Data</title>
-  <h2>Finn Data</h2>
+  <h1>Finn Data</h1>
 </head>
-<body>
+<body bgcolor="#001a33">
 <div id="graph">
-  <img src="data:image/png;base64, {plot_url_links}">
+  <img src="data:image/png;base64, {plot_url_links}" style="margin-right:300px;margin-left:100px;">
   <img src="data:image/png;base64, {plot_url_sold}">
 </div>
-<h2>Mining Reports</h2>
+<h1>Mining Reports</h1>
 <div class="tab">
   <button class="tablinks" onclick="openCity(event, 'RealEstates')">RealEstates Added</button>
   <button class="tablinks" onclick="openCity(event, 'Price')">Price Ups And Downs</button>

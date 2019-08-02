@@ -22,11 +22,11 @@ def jsonToHtml(jsonStr):
     for link in data:
         tstr2 = """
         <tr>
-        <th bgcolor="#e6e6e6" height="30">
-        <a href="{link}">{link}</a>
+        <th bgcolor="#2a3c3c" height="30">
+        <a href="{link}" style="color:#FFFFFF;">{link}</a>
         </th>
         <td>
-        <table bgcolor="#e6e6e6">""".format(link=link)
+        <table bgcolor="#2a3c3c">""".format(link=link)
         tstr1 += tstr2
         out = data[link]
         for pris in out:
@@ -34,8 +34,8 @@ def jsonToHtml(jsonStr):
             time = pris['time'].split('T')
             tstr3="""
             <tr>
-            <td height="30" style="padding-right: 25px;padding-left: 25px;">{price}</td>
-            <td height="30"style="padding-right: 25px;padding-left: 25px;">{time}</td>
+            <td height="30" style="padding-right: 25px;padding-left: 25px;"><font size="3" color="white">{price}</font></td>
+            <td height="30"style="padding-right: 25px;padding-left: 25px;"><font size="3" color="white">{time}</font></td>
             </tr>""".format(price=price, time=time[0])
             tstr1+=tstr3
         tstr4="""

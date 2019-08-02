@@ -20,10 +20,10 @@ def jsonToHtml(jsonStr):
     for item in data["links"]:
         day = item['time'].split('T')
         tstr2 = """<tr>
-        <th bgcolor="#e6e6e6"  height="35">
-        <a href="{link}">{link}</a>
+        <th bgcolor="#2a3c3c" height="35">
+        <a href="{link}" style="color:#FFFFFF;">{link}</a>
         </th>
-        <td  height="35" bgcolor="#e6e6e6" style="padding-right: 25px;padding-left: 25px;">{time}</td>
+        <td  height="35" bgcolor="#2a3c3c" style="padding-right: 25px;padding-left: 25px;"><font size="3" color="white">{time}</font></td>
         """.format(link=item['link'], time=day[0])
         tstr1 += tstr2
         tstr4="""</tr>"""
