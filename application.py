@@ -67,7 +67,7 @@ def graphSold(jsonStr):
 @app.route('/')
 def renderGraph():
     blob_pris = readBlob('multiplePris.json')
-    blob_links = readBlob('links_week.json')
+    blob_links = readBlob('links.json')
     blob_sold = readBlob('sold.json')
     realestates = links.jsonToHtml(blob_links)
     prices = multiplePris.jsonToHtml(blob_pris)
