@@ -1,6 +1,6 @@
 import json
 
-def jsonToHtml():
+def jsonToHtml(jsonStr):
     tstr1 ="""
     <table>
     <thead bgcolor="#00001a">
@@ -13,39 +13,37 @@ def jsonToHtml():
     <font size="3" color="white">Price</font></th>
     <th style="padding-right: 60px;padding-left: 60px;">
     <font size="3" color="white">&nbsp&nbsp&nbsp&nbspDate</font></th>
-    </tr>   
+    </tr>
     </table>
     </td>
     </tr>
     </thead>"""
-    with open('multiplePris.json') as input:
-        data = json.load(input)
-        for link in data:
-            tstr2 = """
+    data = json.loads(jsonStr)
+    for link in data:
+        tstr2 = """
+        <tr>
+        <th bgcolor="#e6e6e6" height="30">
+        <a href="{link}">{link}</a>
+        </th>
+        <td>
+        <table bgcolor="#e6e6e6">""".format(link=link)
+        tstr1 += tstr2
+        out = data[link]
+        for pris in out:
+            price = pris['pris']
+            time = pris['time'].split('T')
+            tstr3="""
             <tr>
-            <th bgcolor="#e6e6e6" height="30">
-            <a href="{link}">{link}</a>
-            </th>
-            <td>
-            <table bgcolor="#e6e6e6">""".format(link=link)
-            tstr1 += tstr2
-            out = data[link]
-            for pris in out:
-                price = pris['pris']
-                time = pris['time'].split('T')
-                tstr3="""
-                <tr>
-                <td height="30" style="padding-right: 25px;padding-left: 25px;">{price}</td>
-                <td height="30"style="padding-right: 25px;padding-left: 25px;">{time}</td>
-                </tr>""".format(price=price, time=time[0])
-                tstr1+=tstr3
-            tstr4="""
+            <td height="30" style="padding-right: 25px;padding-left: 25px;">{price}</td>
+            <td height="30"style="padding-right: 25px;padding-left: 25px;">{time}</td>
+            </tr>""".format(price=price, time=time[0])
+            tstr1+=tstr3
+        tstr4="""
             </table>
             </td>
             </tr>"""
-            tstr1+=tstr4
+        tstr1+=tstr4
     tstr6="""
     </table>"""
     tstr1+=tstr6
     return tstr1
-

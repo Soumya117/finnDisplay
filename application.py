@@ -1,9 +1,14 @@
 #!/usr/bin/env python
+import os, uuid, sys
+from azure.storage.blob import BlockBlobService, PublicAccess
+
+container_name ='finnblob'
 
 from flask import Flask, render_template
 app = Flask(__name__)
 import json
 import seaborn as sns
+import sys
 import io
 import base64
 import matplotlib.pyplot as plt
@@ -11,6 +16,11 @@ import multiplePris
 import links
 import sold
 import tabs
+
+def readBlob(blobName):
+    block_blob_service = BlockBlobService(account_name='finnminingblob', account_key='B3GcfOYBEci9aLYSFo6+KZpahLM52FlMGpFOvK/sD7HbeYspxCCCcAJG0ffnaXlmn8YfgSEarzrCyg5bIRN5Fg==')
+    blob = block_blob_service.get_blob_to_text(container_name, blobName)
+    return blob.content
 
 def readJson(file):
     dict = {}
@@ -57,9 +67,12 @@ def graphSold():
 
 @app.route('/')
 def renderGraph():
-    realestates = links.jsonToHtml()
-    prices = multiplePris.jsonToHtml()
-    soldHouses = sold.jsonToHtml()
+    blob_pris = readBlob('multiplePris.json')
+    blob_links = readBlob('links_week.json')
+    blob_sold = readBlob('sold.json')
+    realestates = links.jsonToHtml(blob_links)
+    prices = multiplePris.jsonToHtml(blob_pris)
+    soldHouses = sold.jsonToHtml(blob_sold)
     tabs1 = tabs.jsonToHtml()
     tabs1 = tabs1.format(
                   realestates=realestates,
