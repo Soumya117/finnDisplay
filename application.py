@@ -22,17 +22,16 @@ def readBlob(blobName):
     blob = block_blob_service.get_blob_to_text(container_name, blobName)
     return blob.content
 
-def readJson(file):
+def readJson(jsonStr):
     dict = {}
-    with open(file) as input:
-        data = json.load(input)
-        for item in data["links"]:
-            time = item['time'].split('T')
-            day = time[0]
-            if day in dict:
-                dict[day] += 1
-            else:
-                dict[day] = 1
+    data = json.loads(jsonStr)
+    for item in data["links"]:
+        time = item['time'].split('T')
+        day = time[0]
+        if day in dict:
+            dict[day] += 1
+        else:
+            dict[day] = 1
     return dict
 
 def prepareGraph(dict, yLabel, title):
@@ -55,13 +54,13 @@ def prepareGraph(dict, yLabel, title):
     plot_url = base64.b64encode(img.getvalue()).decode()
     return plot_url
 
-def graphLinks():
-    dict_links = readJson("links_Week.json")
+def graphLinks(jsonStr):
+    dict_links = readJson(jsonStr)
     plot_url_links = prepareGraph(dict_links, 'Number of RealEstates Added', 'RealEstates')
     return plot_url_links
 
-def graphSold():
-    dict_sold = readJson("sold.json")
+def graphSold(jsonStr):
+    dict_sold = readJson(jsonStr)
     plot_url_sold = prepareGraph(dict_sold, 'Number of Houses Sold', 'Number of Houses Sold')
     return plot_url_sold
 
@@ -78,6 +77,6 @@ def renderGraph():
                   realestates=realestates,
                   price=prices,
                   soldHouses=soldHouses,
-                  plot_url_links=graphLinks(),
-                  plot_url_sold= graphSold())
+                  plot_url_links=graphLinks(blob_links),
+                  plot_url_sold= graphSold(blob_sold))
     return tabs1
