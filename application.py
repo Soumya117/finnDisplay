@@ -5,6 +5,9 @@ import seaborn as sns
 import io
 import base64
 import matplotlib.pyplot as plt
+import multiplePris
+import links
+import sold
 
 def readJson(file):
     dict = {}
@@ -51,6 +54,7 @@ def graphSold():
 
 @app.route('/')
 def renderGraph():
+    links.jsonToHtml()
     return render_template('graph.html',
                            plot_url_links=graphLinks(),
                            plot_url_sold=graphSold())
