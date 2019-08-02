@@ -1,14 +1,15 @@
-<!DOCTYPE html>
+def jsonToHtml():
+    html="""
 <html lang="en">
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-.tab {
+    <style>
+.tab {{
   overflow: hidden;
   border: 1px solid #ccc;
   background-color: #f1f1f1;
-}
-.tab button {
+}}
+.tab button {{
   background-color: inherit;
   float: left;
   border: none;
@@ -17,19 +18,19 @@
   padding: 14px 16px;
   transition: 0.3s;
   font-size: 17px;
-}
-.tab button:hover {
+}}
+.tab button:hover {{
   background-color: #ddd;
-}
-.tab button.active {
+}}
+.tab button.active {{
   background-color: #ccc;
-}
-.tabcontent {
+}}
+.tabcontent {{
   display: none;
   padding: 6px 12px;
   border: 1px solid #ccc;
   border-top: none;
-}
+}}
 </style>
   <title>Finn RealEstate Data</title>
   <h2>Finn Data</h2>
@@ -51,11 +52,11 @@ Realesates
 </div>
 
 <div id="Price" class="tabcontent">
-{{ price }}
+{price}
 </div>
 
 <div id="Sold" class="tabcontent">
-{{ soldHouses }}
+{soldHouses}
 </div>
 
 <script>
@@ -75,4 +76,5 @@ function openCity(evt, cityName) {
 }
 </script>
 </body>
-</html>
+</html>"""
+    return html

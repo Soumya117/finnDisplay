@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from flask import Flask, render_template
 app = Flask(__name__)
 import json
@@ -8,6 +10,7 @@ import matplotlib.pyplot as plt
 import multiplePris
 import links
 import sold
+import tabs
 
 def readJson(file):
     dict = {}
@@ -54,7 +57,19 @@ def graphSold():
 
 @app.route('/')
 def renderGraph():
-    links.jsonToHtml()
-    return render_template('graph.html',
-                           plot_url_links=graphLinks(),
-                           plot_url_sold=graphSold())
+    realestates = links.jsonToHtml()
+    prices = multiplePris.jsonToHtml()
+    soldHouses = sold.jsonToHtml()
+    tabs1 = tabs.jsonToHtml()
+    tabs1 = tabs1.format(price=prices,
+                  soldHouses=soldHouses,
+                  plot_url_links=graphLinks(),
+                  plot_url_sold= graphSold())
+    print(tabs1)
+    # return render_template('graph.html',
+    #                        plot_url_links=graphLinks(),
+    #                        plot_url_sold=graphSold(),
+    #                        realestates=realestates,
+    #                        price=prices,
+    #                        soldHouses=soldHouses)
+    return tabs1

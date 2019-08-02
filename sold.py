@@ -1,9 +1,7 @@
 import json
 
 def jsonToHtml():
-    tstr1 ="""
-    <html>
-    <body>
+    tstr1 ="""Content-type: text/html\n\n
     <table>
     <thead bgcolor="#00001a">
     <tr>
@@ -31,9 +29,7 @@ def jsonToHtml():
             tstr1 += tstr2
             tstr4="""</tr>"""
             tstr1+=tstr4
-    tstr6="""</table>
-    </body>
-    </html>"""
+    tstr6="""</table>"""
     tstr1+=tstr6
-    print(tstr1)
+    return tstr1
 
