@@ -5,3 +5,12 @@ graphical representation.
 
 Work In Progress:
 Plan is to add some filter and search that can be used by the user.
+
+
+Sample Graph
+
+![alt text](https://github.com/Soumya117/finnDisplay/blob/master/sold.png) <br /><br />
+
+
+
+![alt text](https://github.com/Soumya117/finnDisplay/blob/master/realstatepng.png)
