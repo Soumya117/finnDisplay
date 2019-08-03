@@ -14,3 +14,9 @@ Sample Graph
 
 
 ![alt text](https://github.com/Soumya117/finnDisplay/blob/master/realstatepng.png)
+
+
+
+<br />
+
+Test Link: https://finn-display.azurewebsites.net/
