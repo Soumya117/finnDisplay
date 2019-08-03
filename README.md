@@ -1,4 +1,4 @@
-# Python Flask App to present finn data.
+# Python Flask App to present finn.no data.
 
 This app uses the data stored by #finnazureflaskapp. On load, it queries the Azure Storage Blob for data and presents a 
 graphical representation. It also shows the overall data collected from finn in the tables below. 
