@@ -1,6 +1,6 @@
 import json
 
-def jsonToHtml(jsonStr):
+def jsonToHtml(jsonStr, inputDate):
     tstr1 ="""
     <table>
     <thead bgcolor="#00001a">

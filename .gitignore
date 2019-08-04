@@ -1,1 +1,5 @@
 .idea/
+cmake-build-debug/
+*.pyc
+CMakeLists.txt
+.idea/workspace.xml

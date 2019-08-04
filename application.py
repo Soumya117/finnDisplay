@@ -1,21 +1,19 @@
 #!/usr/bin/env python
-import os, uuid, sys
 from azure.storage.blob import BlockBlobService, PublicAccess
-
+from flask import jsonify
+from flask import request
 container_name ='finnblob'
-
+import unicodedata
 from flask import Flask, render_template
 app = Flask(__name__)
 import json
 import seaborn as sns
-import sys
 import io
 import base64
 import matplotlib.pyplot as plt
 import multiplePris
 import links
 import sold
-import tabs
 
 def readBlob(blobName):
     block_blob_service = BlockBlobService(account_name='finnminingblob', account_key='B3GcfOYBEci9aLYSFo6+KZpahLM52FlMGpFOvK/sD7HbeYspxCCCcAJG0ffnaXlmn8YfgSEarzrCyg5bIRN5Fg==')
@@ -42,6 +40,7 @@ def prepareGraph(dict, yLabel, title):
     for k in sorted(dict):
         x.append(k)
         y.append(dict[k])
+    plt.style.use('dark_background')
     plt.plot(x,y)
     plt.legend(loc='upper left',prop = {'size':7},bbox_to_anchor=(1,1))
     plt.tight_layout(pad=5)
@@ -64,19 +63,27 @@ def graphSold(jsonStr):
     plot_url_sold = prepareGraph(dict_sold, 'Number of Houses Sold', 'Number of Houses Sold')
     return plot_url_sold
 
-@app.route('/')
-def renderGraph():
+@app.route('/status', methods=['GET', 'POST'])
+def finnData():
+    filterDate = request.form['date']
+    filterDate = unicodedata.normalize('NFKD', filterDate).encode('ascii','ignore')
+
+    result = {}
+    result['links'] = {}
+    result['sold'] = {}
+    result['price'] = {}
     blob_pris = readBlob('multiplePris.json')
     blob_links = readBlob('links.json')
     blob_sold = readBlob('sold.json')
-    realestates = links.jsonToHtml(blob_links)
-    prices = multiplePris.jsonToHtml(blob_pris)
-    soldHouses = sold.jsonToHtml(blob_sold)
-    tabs1 = tabs.jsonToHtml()
-    tabs1 = tabs1.format(
-                  realestates=realestates,
-                  price=prices,
-                  soldHouses=soldHouses,
+    result['links'] = links.jsonToHtml(blob_links, filterDate)
+    result['price'] = multiplePris.jsonToHtml(blob_pris, filterDate)
+    result['sold'] = sold.jsonToHtml(blob_sold, filterDate)
+    return jsonify(result)
+
+@app.route('/')
+def renderGraph():
+    blob_links = readBlob('links.json')
+    blob_sold = readBlob('sold.json')
+    return render_template("graph.html",
                   plot_url_links=graphLinks(blob_links),
                   plot_url_sold= graphSold(blob_sold))
-    return tabs1
