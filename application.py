@@ -3,7 +3,6 @@ from azure.storage.blob import BlockBlobService, PublicAccess
 from flask import jsonify
 from flask import request
 container_name ='finnblob'
-import unicodedata
 from flask import Flask, render_template
 app = Flask(__name__)
 import json
@@ -66,7 +65,7 @@ def graphSold(jsonStr):
 @app.route('/status', methods=['GET', 'POST'])
 def finnData():
     filterDate = request.form['date']
-    filterDate = unicodedata.normalize('NFKD', filterDate).encode('ascii','ignore')
+    filterDate = filterDate.encode('ascii','ignore').decode('utf-8')
 
     result = {}
     result['links'] = {}
