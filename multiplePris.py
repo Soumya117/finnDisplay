@@ -7,15 +7,20 @@ def jsonToHtml(jsonStr, inputDate):
         tstr2 = """
         <tr>
         <th bgcolor="#2a3c3c" height="30">
-        <a href="{link}" style="color:#FFFFFF;">{text}</a>
+        <a href="{link}" style="color:#FFFFFF;" target="_blank">{text}</a>
         </th>
-        <td height="30" bgcolor="#2a3c3c" style="padding-right: 25px;padding-left: 25px;"><font size="3" color="white">{address}</font></td>
+        <td height="40" bgcolor="#2a3c3c" style="padding-right: 25px;padding-left: 25px;">
+        <font size="3" color="white">
+        <a href="{map_link}" style="color:#FFFFFF;" target="_blank">{address}</a>
+        </font>
+        </td>
         <td height="30" bgcolor="#2a3c3c" style="padding-right: 25px;padding-left: 25px;"><font size="3" color="white">{area}</font></td>
         <td>
         <table bgcolor="#2a3c3c">""".format(link=item['link'],
                                             address=item['details']['address'],
                                             text=item['details']['text'],
-                                            area=item['details']['area'])
+                                            area=item['details']['area'],
+                                            map_link="https://www.google.co.in/maps/place/"+item['details']['address'])
         tstr1 += tstr2
         out = item['price_list']
         for pris in out:
