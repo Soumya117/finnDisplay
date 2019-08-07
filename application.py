@@ -14,9 +14,13 @@ import multiplePris
 import links
 import sold
 import visning
+import sys
 
 def readBlob(blobName):
-    block_blob_service = BlockBlobService(account_name='finnminingblob', account_key='B3GcfOYBEci9aLYSFo6+KZpahLM52FlMGpFOvK/sD7HbeYspxCCCcAJG0ffnaXlmn8YfgSEarzrCyg5bIRN5Fg==')
+    print("Reading blob: ", blobName)
+    sys.stdout.flush()
+    block_blob_service = BlockBlobService(account_name='finnminingblob',
+                                          account_key='B3GcfOYBEci9aLYSFo6+KZpahLM52FlMGpFOvK/sD7HbeYspxCCCcAJG0ffnaXlmn8YfgSEarzrCyg5bIRN5Fg==')
     blob = block_blob_service.get_blob_to_text(container_name, blobName)
     return blob.content
 
@@ -68,6 +72,9 @@ def finnData():
     filterDate = request.form['date']
     filterDate = filterDate.encode('ascii','ignore').decode('utf-8')
 
+    print("Received date: ", filterDate)
+    sys.stdout.flush()
+
     result = {}
     result['links'] = {}
     result['sold'] = {}
@@ -78,6 +85,7 @@ def finnData():
     blob_links = readBlob('links.json')
     blob_sold = readBlob('sold.json')
     blob_visnings = readBlob('visning.json')
+
     result['links'] = links.jsonToHtml(blob_links, filterDate)
     result['price'] = multiplePris.jsonToHtml(blob_pris, filterDate)
     result['sold'] = sold.jsonToHtml(blob_sold, filterDate)
