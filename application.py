@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 import multiplePris
 import links
 import sold
+import visning
 
 def readBlob(blobName):
     block_blob_service = BlockBlobService(account_name='finnminingblob', account_key='B3GcfOYBEci9aLYSFo6+KZpahLM52FlMGpFOvK/sD7HbeYspxCCCcAJG0ffnaXlmn8YfgSEarzrCyg5bIRN5Fg==')
@@ -71,12 +72,17 @@ def finnData():
     result['links'] = {}
     result['sold'] = {}
     result['price'] = {}
+    result['visnings'] = {}
+
     blob_pris = readBlob('multiplePris.json')
     blob_links = readBlob('links.json')
     blob_sold = readBlob('sold.json')
+    blob_visnings = readBlob('visning.json')
     result['links'] = links.jsonToHtml(blob_links, filterDate)
     result['price'] = multiplePris.jsonToHtml(blob_pris, filterDate)
     result['sold'] = sold.jsonToHtml(blob_sold, filterDate)
+    result['visnings'] = visning.jsonToHtml(blob_visnings, filterDate)
+
     return jsonify(result)
 
 @app.route('/')

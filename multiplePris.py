@@ -1,36 +1,25 @@
 import json
 
 def jsonToHtml(jsonStr, inputDate):
-    tstr1 ="""
-    <table>
-    <thead bgcolor="#00001a">
-    <tr>
-    <th><font size="3" color="white">Ad</font></th>
-    <td>
-    <table>
-    <tr>
-    <th style="padding-right: 50x;padding-left: 50px;">
-    <font size="3" color="white">Price</font></th>
-    <th style="padding-right: 60px;padding-left: 60px;">
-    <font size="3" color="white">&nbsp&nbsp&nbsp&nbspDate</font></th>
-    </tr>
-    </table>
-    </td>
-    </tr>
-    </thead>"""
+    tstr1 ="""<table>"""
     data = json.loads(jsonStr)
-    for link in data:
+    for item in data['links']:
         tstr2 = """
         <tr>
         <th bgcolor="#2a3c3c" height="30">
-        <a href="{link}" style="color:#FFFFFF;">{link}</a>
+        <a href="{link}" style="color:#FFFFFF;">{text}</a>
         </th>
+        <td height="30" bgcolor="#2a3c3c" style="padding-right: 25px;padding-left: 25px;"><font size="3" color="white">{address}</font></td>
+        <td height="30" bgcolor="#2a3c3c" style="padding-right: 25px;padding-left: 25px;"><font size="3" color="white">{area}</font></td>
         <td>
-        <table bgcolor="#2a3c3c">""".format(link=link)
+        <table bgcolor="#2a3c3c">""".format(link=item['link'],
+                                            address=item['details']['address'],
+                                            text=item['details']['text'],
+                                            area=item['details']['area'])
         tstr1 += tstr2
-        out = data[link]
+        out = item['price_list']
         for pris in out:
-            price = pris['pris']
+            price = pris['price']
             time = pris['time'].split('T')
             tstr3="""
             <tr>
