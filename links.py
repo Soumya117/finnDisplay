@@ -1,9 +1,13 @@
 import json
+import sys
 
 def jsonToHtml(jsonStr, inputDate):
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
     tstr1 ="""<table>"""
     data = json.loads(jsonStr)
     for item in data["links"]:
+        map_link = "https://www.google.co.in/maps/place/"+item['address']
         day = item['time'].split('T')
         if inputDate in day:
             tstr2 = """<tr>
@@ -30,7 +34,7 @@ def jsonToHtml(jsonStr, inputDate):
                        address=item['address'],
                        area=item['area'],
                        price=item['price'],
-                       map_link="https://www.google.co.in/maps/place/"+item['address'])
+                       map_link=map_link)
             tstr1 += tstr2
             tstr4="""</tr>"""
             tstr1+=tstr4
