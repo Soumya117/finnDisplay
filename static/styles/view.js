@@ -112,7 +112,6 @@
 
   function changeView()
   {
-    console.log("Changing view..");
     var option = document.getElementById("mySelect").value;
     if (option === 'list')
     {
@@ -123,68 +122,70 @@
       showMap()
     }
   }
+  $( document ).ready(function() {
+      changeView()
+      document.getElementById("date").addEventListener("change", function () {
+          var req = new XMLHttpRequest();
 
-  document.getElementById("date").addEventListener("change", function () {
-    var req = new XMLHttpRequest();
+          var markers = [];
+          var info = [];
 
-    var markers = [];
-    var info = [];
+          var markers_links = [];
+          var info_links = [];
 
-    var markers_links = [];
-    var info_links = [];
+          var markers_price = [];
+          var info_price = [];
 
-    var markers_price = [];
-    var info_price = [];
+          var markers_sold = [];
+          var info_sold = [];
 
-    var markers_sold = [];
-    var info_sold = [];
+          var markers_visnings = [];
+          var info_visnings = [];
 
-    var markers_visnings = [];
-    var info_visnings = [];
+          req.onreadystatechange = function () {
 
-    req.onreadystatechange = function () {
+              if (this.readyState == 4 && this.status == 200) {
 
-      if (this.readyState == 4 && this.status == 200) {
+                  var result = JSON.parse(this.responseText);
 
-        var result = JSON.parse(this.responseText);
+                  markers_links = result['links']['map']['markers'];
+                  info_links = result['links']['map']['info'];
 
-        markers_links = result['links']['map']['markers'];
-        info_links = result['links']['map']['info'];
+                  markers_price = result['price']['map']['markers'];
+                  info_price = result['price']['map']['info'];
 
-        markers_price = result['price']['map']['markers'];
-        info_price = result['price']['map']['info'];
+                  markers_sold = result['sold']['map']['markers'];
+                  info_sold = result['sold']['map']['info'];
 
-        markers_sold = result['sold']['map']['markers'];
-        info_sold = result['sold']['map']['info'];
+                  markers_visnings = result['visnings']['map']['markers'];
+                  info_visnings = result['visnings']['map']['info'];
 
-        markers_visnings = result['visnings']['map']['markers'];
-        info_visnings = result['visnings']['map']['info'];
+                  links = result['links']['table']
+                  price = result['price']['table']
+                  sold = result['sold']['table']
+                  visnings = result['visnings']['table']
 
-        links = result['links']['table']
-        price = result['price']['table']
-        sold = result['sold']['table']
-        visnings = result['visnings']['table']
+                  $('#realesates_list').append(links)
+                  $('#price_list').append(price)
+                  $('#sold_list').append(sold)
+                  $('#visnings_list').append(visnings)
+              }
+          };
 
-        $('#realesates_list').append(links)
-        $('#price_list').append(price)
-        $('#sold_list').append(sold)
-        $('#visnings_list').append(visnings)
-      }
-    };
+          req.open('POST', '/status', false);
+          req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+          req.send("date=" + this.value);
 
-    req.open('POST', '/status', false);
-    req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
-    req.send("date=" + this.value);
+          markers.push(markers_links);
+          markers.push(markers_price);
+          markers.push(markers_sold);
+          markers.push(markers_visnings);
 
-    markers.push(markers_links);
-    markers.push(markers_price);
-    markers.push(markers_sold);
-    markers.push(markers_visnings);
+          info.push(info_links);
+          info.push(info_price);
+          info.push(info_sold);
+          info.push(info_visnings);
 
-    info.push(info_links);
-    info.push(info_price);
-    info.push(info_sold);
-    info.push(info_visnings);
-
-    displayMap(markers, info)
+          displayMap(markers, info)
+      });
   });

@@ -19,10 +19,10 @@ def filterJson(jsonStr, inputData):
     return result
 
 def jsonToHtml(jsonStr):
-    # sys.setdefaultencoding('utf-8')
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
     tstr1 ="""<table>>"""
     for item in jsonStr["links"]:
-        day = item['time'].split('T')
         map_link = "https://www.google.co.in/maps/place/"+item['address']
         tstr2 = """<tr>
             <th bgcolor="#2a3c3c" height="40" width="40%">

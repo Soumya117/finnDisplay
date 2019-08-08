@@ -1,6 +1,6 @@
 import googlemaps
 
-gmaps = googlemaps.Client(key='AIzaSyBoxlPokqwjkKJPfKNtcXdmbbRuZhp4xjo')
+gmaps = googlemaps.Client(key='google_key')
 
 def getMarkers(address):
     geocode_result = gmaps.geocode(address)
