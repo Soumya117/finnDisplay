@@ -1,8 +1,15 @@
-import googlemaps
+# import googlemaps
+#
+# gmaps = googlemaps.Client(key='AIzaSyBoxlPokqwjkKJPfKNtcXdmbbRuZhp4xjo')
+#
+# # Geocoding an address
+# geocode_result = gmaps.geocode('Solåsveien 20 B, Oslo, Østensjø')
+#
+# print("GeoCode result: ", geocode_result)
 
-gmaps = googlemaps.Client(key='')
-
-# Geocoding an address
-geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
-
-print("GeoCode result: ", geocode_result[0]['geometry']['location'])
+from  geopy.geocoders import Nominatim
+geolocator = Nominatim()
+city ="London"
+country ="Uk"
+loc = geolocator.geocode("Rubina Ranas gate 7, Oslo, Gamle Oslo, Norway")
+print("latitude is :" ,loc.latitude,"\nlongtitude is:" ,loc.longitude)

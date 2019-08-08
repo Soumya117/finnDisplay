@@ -86,10 +86,22 @@ def finnData():
     blob_sold = readBlob('sold.json')
     blob_visnings = readBlob('visning.json')
 
-    result['links'] = links.jsonToHtml(blob_links, filterDate)
-    result['price'] = multiplePris.jsonToHtml(blob_pris, filterDate)
-    result['sold'] = sold.jsonToHtml(blob_sold, filterDate)
-    result['visnings'] = visning.jsonToHtml(blob_visnings, filterDate)
+    filterLinks = links.filterJson(blob_links, filterDate)
+    filterPrice = json.loads(blob_pris) #TODO Filter
+    filterSold = sold.filterJson(blob_sold, filterDate)
+    filterVisnings = json.loads(blob_visnings) #TODO Filter
+
+    result['links']['table'] = links.jsonToHtml(filterLinks)
+    result['links']['map'] = links.createGmap(filterLinks)
+
+    result['price']['table'] = multiplePris.jsonToHtml(filterPrice)
+    result['price']['map'] = multiplePris.createGmap(filterPrice)
+
+    result['sold']['table'] = sold.jsonToHtml(filterSold)
+    result['sold']['map'] = sold.createGmap(filterSold)
+
+    result['visnings']['table'] = visning.jsonToHtml(filterVisnings)
+    result['visnings']['map']= visning.createGmap(filterVisnings)
 
     return jsonify(result)
 
