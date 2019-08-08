@@ -1,6 +1,6 @@
 import googlemaps
 
-gmaps = googlemaps.Client(key='AIzaSyBoxlPokqwjkKJPfKNtcXdmbbRuZhp4xjo')
+gmaps = googlemaps.Client(key='')
 
 # Geocoding an address
 geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
