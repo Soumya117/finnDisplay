@@ -19,8 +19,8 @@ import sys
 def readBlob(blobName):
     print("Reading blob: ", blobName)
     sys.stdout.flush()
-    block_blob_service = BlockBlobService(account_name='finnminingblob',
-                                          account_key='B3GcfOYBEci9aLYSFo6+KZpahLM52FlMGpFOvK/sD7HbeYspxCCCcAJG0ffnaXlmn8YfgSEarzrCyg5bIRN5Fg==')
+    block_blob_service = BlockBlobService(account_name='accountName',
+                                          account_key='AccountKey')
     blob = block_blob_service.get_blob_to_text(container_name, blobName)
     return blob.content
 
