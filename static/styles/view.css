@@ -85,6 +85,10 @@
       overflow-y: scroll;
     }
 
+    #loading{
+        color: #D3E7E9;
+        font-size: 25px;
+    }
     * {
       box-sizing: border-box;
     }

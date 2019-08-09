@@ -194,8 +194,14 @@ $(document).ready(function () {
       if (this.readyState == 4 && this.status == 200) {
         var result = JSON.parse(this.responseText);
         callback(result)
+        document.getElementById('date').disabled = false;
+        document.getElementById('mySelect').disabled = false;
+        document.getElementById('loading').style.display="none";
       }
     };
+    document.getElementById('loading').style.display="block";
+    document.getElementById('date').disabled = true;
+    document.getElementById('mySelect').disabled = true;
     req.open('POST', '/status');
     req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
     req.send("date=" + this.value);

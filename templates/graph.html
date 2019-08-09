@@ -22,10 +22,11 @@
 <div id="reports">
 
 <input type="date" id="date">
-<select id="mySelect" onchange="changeView()"><br/>
+<select id="mySelect" onchange="changeView()">
   <option value="list" style="color:#000000;">List View</option>
   <option value="map" style="color:#000000;">Map View</option>
 </select>
+<span id="loading" style="display: none">Fetching Results...!</span>
 <br/><br/>
 <div class="tab">
   <button class="tablinks" onclick="viewData(event, 'RealEstates')">RealEstates Added</button>
