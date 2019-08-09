@@ -45,7 +45,7 @@ def prepareGraph(dict, yLabel, title):
         x.append(k)
         y.append(dict[k])
     plt.style.use('dark_background')
-    plt.plot(x,y)
+    plt.plot(x,y, color="r")
     plt.legend(loc='upper left',prop = {'size':7},bbox_to_anchor=(1,1))
     plt.tight_layout(pad=5)
     plt.ylabel(yLabel)

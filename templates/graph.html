@@ -5,26 +5,28 @@
   <script src="{{ url_for('static',filename='styles/view.js') }}"></script>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/view.css') }}" media="screen" />
   <title>Finn RealEstate Data</title>
-  <h1>Finn Data</h1>
 </head>
 
-<body bgcolor="#001a33">
-<div class="graph">
-  <div class="plot"><img src="data:image/png;base64, {{ plot_url_links }}"></div>
-  <div class="plot"><img src="data:image/png;base64, {{ plot_url_sold }}"></div>
+<div class='wrap'>
+<div id="toogleGraph" onclick="toggleGraph()">Graphs</div>
+<br /><br />
+<div id="graph">
+  <div class="plot">
+    <img src="data:image/png;base64, {{ plot_url_links }}" style="padding-right: 50px"><img src="data:image/png;base64, {{ plot_url_sold }}">
+  </div>
 </div>
 
-<h1>Mining Reports</h1>
+<br /><br /><br />
+<div id="toogleReports" onclick="toggleReports()">Reports</div>
+<br /><br />
+<div id="reports">
 
 <input type="date" id="date">
-
-<select id="mySelect" onchange="changeView()">
-
+<select id="mySelect" onchange="changeView()"><br/>
   <option value="list" style="color:#000000;">List View</option>
   <option value="map" style="color:#000000;">Map View</option>
-
 </select>
-
+<br/><br/>
 <div class="tab">
   <button class="tablinks" onclick="viewData(event, 'RealEstates')">RealEstates Added</button>
   <button class="tablinks" onclick="viewData(event, 'Price')">Price Ups And Downs</button>
@@ -54,6 +56,8 @@
   <span onclick="this.parentElement.style.display='none'">x</span>
   <div id="visnings_map" class="mapping"></div>
   <div id="visnings_list"></div>
+</div>
+</div>
 </div>
 </body>
 </html>
