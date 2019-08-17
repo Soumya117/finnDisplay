@@ -93,11 +93,11 @@
       box-sizing: border-box;
     }
 
-    .plot {
-      padding-left: 300px;
-      padding-right: 100px;
-      position: static;
-    }
+    /*.plot {*/
+      /*padding-left: 300px;*/
+      /*padding-right: 100px;*/
+      /*position: static;*/
+    /*}*/
 
     #graph::after {
         animation: fadeEffect 1s;

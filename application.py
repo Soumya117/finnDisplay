@@ -15,6 +15,7 @@ import links
 import sold
 import visning
 import sys
+from datetime import datetime
 
 def readBlob(blobName):
     print("Reading blob: ", blobName)
@@ -24,12 +25,19 @@ def readBlob(blobName):
     blob = block_blob_service.get_blob_to_text(container_name, blobName)
     return blob.content
 
+def prepareDate(dateStr):
+    date = datetime.strptime(dateStr, "%Y-%m-%d")
+    day = date.strftime("%d")
+    month = date.strftime("%B")
+    result = day + " " + month
+    return result
+
 def readJson(jsonStr):
     dict = {}
     data = json.loads(jsonStr)
     for item in data["links"]:
         time = item['time'].split('T')
-        day = time[0]
+        day = prepareDate(time[0])
         if day in dict:
             dict[day] += 1
         else:
@@ -41,12 +49,18 @@ def prepareGraph(dict, yLabel, title):
     sns.set_style("dark") #E.G.
     x = []
     y = []
-    for k in sorted(dict):
+    font = {'size'   : 25}
+    plt.rc('font', **font)
+    dict_size = len(dict)
+    if len(dict) > 14:
+        dict_size = 14
+    for k in sorted(dict)[len(dict)-dict_size:len(dict)]:
         x.append(k)
         y.append(dict[k])
     plt.style.use('dark_background')
     plt.plot(x,y, color="r")
-    plt.legend(loc='upper left',prop = {'size':7},bbox_to_anchor=(1,1))
+    plt.gcf().set_size_inches(30, 13)
+    plt.legend(loc='upper left',prop = {'size':25},bbox_to_anchor=(1,1))
     plt.tight_layout(pad=5)
     plt.ylabel(yLabel)
     plt.title(title)
@@ -64,7 +78,7 @@ def graphLinks(jsonStr):
 
 def graphSold(jsonStr):
     dict_sold = readJson(jsonStr)
-    plot_url_sold = prepareGraph(dict_sold, 'Number of Houses Sold', 'Number of Houses Sold')
+    plot_url_sold = prepareGraph(dict_sold, 'Number of Houses Sold', 'Sold Status')
     return plot_url_sold
 
 @app.route('/status', methods=['GET', 'POST'])
