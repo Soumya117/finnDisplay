@@ -46,6 +46,7 @@ def readJson(jsonStr):
 
 def prepareGraph(dict, yLabel, title):
     img = io.BytesIO()
+    plt.switch_backend('SVG')
     sns.set_style("dark") #E.G.
     x = []
     y = []
@@ -64,9 +65,9 @@ def prepareGraph(dict, yLabel, title):
     plt.tight_layout(pad=5)
     plt.ylabel(yLabel)
     plt.title(title)
-    plt.grid()
+    plt.grid(linestyle='-', linewidth='2')
     plt.savefig(img, format='png')
-    plt.close()
+    # plt.close()
     img.seek(0)
     plot_url = base64.b64encode(img.getvalue()).decode()
     return plot_url
@@ -100,22 +101,42 @@ def finnData():
     blob_sold = readBlob('sold.json')
     blob_visnings = readBlob('visning.json')
 
+    print("Filtering jsons..!!")
+    sys.stdout.flush()
+
     filterLinks = links.filterJson(blob_links, filterDate)
     filterPrice = json.loads(blob_pris) #TODO Filter
     filterSold = sold.filterJson(blob_sold, filterDate)
     filterVisnings = json.loads(blob_visnings) #TODO Filter
 
+    print("Preparing links..")
+    sys.stdout.flush()
+
+    print("JsonToHtml...")
     result['links']['table'] = links.jsonToHtml(filterLinks)
+    print("CreateGmap")
     result['links']['map'] = links.createGmap(filterLinks)
+
+    print("Preparing price..")
+    sys.stdout.flush()
 
     result['price']['table'] = multiplePris.jsonToHtml(filterPrice)
     result['price']['map'] = multiplePris.createGmap(filterPrice)
 
+    print("Preparing sold..")
+    sys.stdout.flush()
+
     result['sold']['table'] = sold.jsonToHtml(filterSold)
     result['sold']['map'] = sold.createGmap(filterSold)
 
-    result['visnings']['table'] = visning.jsonToHtml(filterVisnings)
-    result['visnings']['map']= visning.createGmap(filterVisnings)
+    print("Preparing visning...")
+    sys.stdout.flush()
+    #
+    # result['visnings']['table'] = visning.jsonToHtml(filterVisnings)
+    # result['visnings']['map']= visning.createGmap(filterVisnings)
+
+    print("Returning data...")
+    sys.stdout.flush()
 
     return jsonify(result)
 

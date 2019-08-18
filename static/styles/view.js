@@ -160,28 +160,35 @@ function callback(result) {
   markers_sold = result['sold']['map']['markers'];
   info_sold = result['sold']['map']['info'];
 
-  markers_visnings = result['visnings']['map']['markers'];
-  info_visnings = result['visnings']['map']['info'];
+  // markers_visnings = result['visnings']['map']['markers'];
+  // info_visnings = result['visnings']['map']['info'];
 
   links = result['links']['table']
   price = result['price']['table']
   sold = result['sold']['table']
-  visnings = result['visnings']['table']
+  // visnings = result['visnings']['table']
+
+  $('#realesates_list').empty();
+  $('#price_list').empty();
+  $('#sold_list').empty();
+  $('#realestates_map').empty();
+  $('#price_map').empty();
+  $('#sold_map').empty();
 
   $('#realesates_list').append(links)
   $('#price_list').append(price)
   $('#sold_list').append(sold)
-  $('#visnings_list').append(visnings)
+  // $('#visnings_list').append(visnings)
 
   markers.push(markers_links);
   markers.push(markers_price);
   markers.push(markers_sold);
-  markers.push(markers_visnings);
+  // markers.push(markers_visnings);
 
   info.push(info_links);
   info.push(info_price);
   info.push(info_sold);
-  info.push(info_visnings);
+  // info.push(info_visnings);
 
   displayMap(markers, info)
 }
