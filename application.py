@@ -160,7 +160,7 @@ def getRealestates():
     filterDate = receiveDate()
 
     result = {}
-    result['links'] = {}
+    result['realestates'] = {}
 
     blob_links = readBlob('links.json')
 

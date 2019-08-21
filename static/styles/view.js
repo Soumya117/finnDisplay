@@ -9,28 +9,15 @@ jQuery(function ($) {
   document.body.appendChild(script);
 });
 
-//TODO add arguments in the functions
 function hideMap(div) {
-  console.log("Hide map : ", div);
   document.getElementById(div+'_map').style.display = "none";
   document.getElementById(div+'_list').style.display = "block";
 }
 
 function showMap(div) {
-  console.log("Show map: ", div);
   document.getElementById(div+'_map').style.display = "block";
   document.getElementById(div+'_list').style.display = "none";
 
-}
-
-function displayMap(markers, infoWindowContent) {
-  initializeArray(markers, infoWindowContent, ['realestates_map', 'price_map', 'sold_map', 'visnings_map']);
-}
-
-function initializeArray(markers, infoWindowContent, divIdArray) {
-  for (var i = 0; i < markers.length; i++) {
-    initialize(markers[i], infoWindowContent[i], divIdArray[i])
-  }
 }
 
 function initialize(markers, infoWindowContent, divId) {
@@ -86,24 +73,6 @@ function toggle(div_id) {
   }
 }
 
-function toggleGraph() {
-  var x = document.getElementById("graph");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-}
-
-function toggleReports() {
-  var x = document.getElementById("reports");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-}
-
 function viewData(evt, cityName) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
@@ -119,7 +88,6 @@ function viewData(evt, cityName) {
 }
 
 function changeView(id) {
-  console.log("Change view: ", id);
   var option = document.getElementById(id+'_mySelect').value;
   if (option === 'list') {
     hideMap(id);
@@ -138,18 +106,18 @@ function callback(result, id) {
 
   table = result[id]['table'];
 
-  var div_list = id+'_list';
-  var div_map = id+'_map';
+  var div_list = '#'+id+'_list';
+  var div_map = '#'+id+'_map';
 
-  $('#div_list').empty();
-  $('#div_map').empty();
+  $(div_list).empty();
+  $(div_map).empty();
 
-  $('#div_list').append(table);
+  $(div_list).append(table);
 
   markers.push(marker);
   infos.push(info);
 
-  displayMap(markers, info)
+  initialize(marker, info, id+'_map');
 }
 
 function registerListener(id) {
