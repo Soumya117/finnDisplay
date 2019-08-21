@@ -1,26 +1,43 @@
 import json
 import sys
-import markers
+import datetime
 
-def filterJson(jsonStr, inputData):
+def parseDate(dateStr):
+    date = dateStr.split(", ")[0]
+    day = date.split(" ")
+    now = datetime.datetime.now()
+    tmpDate = day[1].strip('.') + " " + day[2] + " " +  str(now.year)
+    finalDate = datetime.datetime.strptime(tmpDate, '%d %B %Y').strftime('%Y-%m-%d')
+    current = datetime.datetime.today().strftime('%Y-%m-%d')
+    if current <= finalDate:
+        return True
+
+def filterJson(jsonStr):
     result = {}
     result['links'] = []
     data = json.loads(jsonStr)
     for item in data['links']:
-        time = item['time'].split('T')
-        if inputData in time:
+        upcoming = False
+        for date in item['visnings']:
+            if parseDate(date):
+                upcoming = True
+                break
+        if upcoming:
             res = {}
             res['link'] = item['link']
-            res['text'] = item['text']
-            res['address'] = item['address']
-            res['area'] = item['area']
-            res['price'] = item['price']
+            res['details'] = {}
+            res['details']['text'] = item['details']['text']
+            res['details']['address'] = item['details']['address']
+            res['details']['geocode'] = item['details']['geocode']
+            res['details']['area'] = item['details']['area']
+            res['details']['price'] = item['details']['price']
+            res['visnings'] = item['visnings']
             result['links'].append(res)
     return result
 
 def jsonToHtml(jsonStr):
-    reload(sys)
-    sys.setdefaultencoding('utf-8')
+    # reload(sys)
+    # sys.setdefaultencoding('utf-8')
     tstr1 ="""<table>"""
     for item in jsonStr['links']:
         map_link = "https://www.google.co.in/maps/place/"+item['details']['address']
@@ -68,7 +85,7 @@ def createGmap(jsonStr):
     for item in jsonStr['links']:
         add = item['details']['address']
         map_link = "https://www.google.co.in/maps/place/"+item['details']['address']
-        geoCode = markers.getMarkers(add)
+        geoCode = item['details']['geocode']
         info = """
         <div class="info_content" style="width:300px; margin: auto;">
         <h2>

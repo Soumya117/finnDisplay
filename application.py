@@ -107,33 +107,20 @@ def finnData():
     filterLinks = links.filterJson(blob_links, filterDate)
     filterPrice = json.loads(blob_pris) #TODO Filter
     filterSold = sold.filterJson(blob_sold, filterDate)
-    filterVisnings = json.loads(blob_visnings) #TODO Filter
+    filterVisnings = visning.filterJson(blob_visnings) #TODO Filter
 
-    print("Preparing links..")
-    sys.stdout.flush()
 
-    print("JsonToHtml...")
     result['links']['table'] = links.jsonToHtml(filterLinks)
-    print("CreateGmap")
     result['links']['map'] = links.createGmap(filterLinks)
-
-    print("Preparing price..")
-    sys.stdout.flush()
 
     result['price']['table'] = multiplePris.jsonToHtml(filterPrice)
     result['price']['map'] = multiplePris.createGmap(filterPrice)
 
-    print("Preparing sold..")
-    sys.stdout.flush()
-
     result['sold']['table'] = sold.jsonToHtml(filterSold)
     result['sold']['map'] = sold.createGmap(filterSold)
 
-    print("Preparing visning...")
-    sys.stdout.flush()
-    #
-    # result['visnings']['table'] = visning.jsonToHtml(filterVisnings)
-    # result['visnings']['map']= visning.createGmap(filterVisnings)
+    result['visnings']['table'] = visning.jsonToHtml(filterVisnings)
+    result['visnings']['map']= visning.createGmap(filterVisnings)
 
     print("Returning data...")
     sys.stdout.flush()

@@ -1,6 +1,5 @@
 import json
 import sys
-import markers
 
 def filterJson(jsonStr, inputData):
     result = {}
@@ -11,16 +10,18 @@ def filterJson(jsonStr, inputData):
         if inputData in time:
             res = {}
             res['link'] = item['link']
-            res['text'] = item['text']
-            res['address'] = item['address']
-            res['area'] = item['area']
-            res['price'] = item['price']
+            res['details'] = {}
+            res['details']['text'] = item['details']['text']
+            res['details']['address'] = item['details']['address']
+            res['details']['area'] = item['details']['area']
+            res['details']['geocode'] = item['details']['geocode']
+            res['price_list'] = item['price_list']
             result['links'].append(res)
     return result
 
 def jsonToHtml(jsonStr):
-    reload(sys)
-    sys.setdefaultencoding('utf-8')
+    # reload(sys)
+    # sys.setdefaultencoding('utf-8')
     tstr1 ="""<table>"""
     for item in jsonStr['links']:
         map_link = "https://www.google.co.in/maps/place/"+item['details']['address']
@@ -69,7 +70,7 @@ def createGmap(jsonStr):
     for item in jsonStr['links']:
         add = item['details']['address']
         map_link = "https://www.google.co.in/maps/place/"+item['details']['address']
-        geoCode = markers.getMarkers(add)
+        geoCode = item['details']['geocode']
         info = """
         <div class="info_content" style="width:300px; margin: auto;">
         <h2>
