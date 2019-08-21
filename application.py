@@ -82,45 +82,95 @@ def graphSold(jsonStr):
     plot_url_sold = prepareGraph(dict_sold, 'Number of Houses Sold', 'Sold Status')
     return plot_url_sold
 
-@app.route('/status', methods=['GET', 'POST'])
-def finnData():
+def receiveDate():
     filterDate = request.form['date']
     filterDate = filterDate.encode('ascii','ignore').decode('utf-8')
-
     print("Received date: ", filterDate)
     sys.stdout.flush()
+    return filterDate
+
+@app.route('/status/visnings', methods=['GET', 'POST'])
+def getVisnings():
+    filterDate = receiveDate()
 
     result = {}
-    result['links'] = {}
-    result['sold'] = {}
-    result['price'] = {}
     result['visnings'] = {}
 
-    blob_pris = readBlob('multiplePris.json')
-    blob_links = readBlob('links.json')
-    blob_sold = readBlob('sold.json')
     blob_visnings = readBlob('visning.json')
 
     print("Filtering jsons..!!")
     sys.stdout.flush()
 
-    filterLinks = links.filterJson(blob_links, filterDate)
-    filterPrice = json.loads(blob_pris) #TODO Filter
-    filterSold = sold.filterJson(blob_sold, filterDate)
     filterVisnings = visning.filterJson(blob_visnings) #TODO Filter
 
+    result['visnings']['table'] = visning.jsonToHtml(filterVisnings)
+    result['visnings']['map']= visning.createGmap(filterVisnings)
 
-    result['links']['table'] = links.jsonToHtml(filterLinks)
-    result['links']['map'] = links.createGmap(filterLinks)
+    print("Returning data...")
+    sys.stdout.flush()
 
-    result['price']['table'] = multiplePris.jsonToHtml(filterPrice)
-    result['price']['map'] = multiplePris.createGmap(filterPrice)
+    return jsonify(result)
+
+@app.route('/status/sold', methods=['GET', 'POST'])
+def getSold():
+    filterDate = receiveDate()
+
+    result = {}
+    result['sold'] = {}
+
+    blob_sold = readBlob('sold.json')
+
+    print("Filtering jsons..!!")
+    sys.stdout.flush()
+
+    filterSold = sold.filterJson(blob_sold, filterDate)
 
     result['sold']['table'] = sold.jsonToHtml(filterSold)
     result['sold']['map'] = sold.createGmap(filterSold)
 
-    result['visnings']['table'] = visning.jsonToHtml(filterVisnings)
-    result['visnings']['map']= visning.createGmap(filterVisnings)
+    print("Returning data...")
+    sys.stdout.flush()
+
+    return jsonify(result)
+
+@app.route('/status/price', methods=['GET', 'POST'])
+def getPrice():
+    filterDate = receiveDate()
+
+    result = {}
+    result['price'] = {}
+
+    blob_pris = readBlob('multiplePris.json')
+
+    print("Filtering jsons..!!")
+    sys.stdout.flush()
+
+    filterPrice = json.loads(blob_pris) #TODO Filter
+
+    result['price']['table'] = multiplePris.jsonToHtml(filterPrice)
+    result['price']['map'] = multiplePris.createGmap(filterPrice)
+
+    print("Returning data...")
+    sys.stdout.flush()
+
+    return jsonify(result)
+
+@app.route('/status/realestates', methods=['GET', 'POST'])
+def getRealestates():
+    filterDate = receiveDate()
+
+    result = {}
+    result['links'] = {}
+
+    blob_links = readBlob('links.json')
+
+    print("Filtering jsons..!!")
+    sys.stdout.flush()
+
+    filterLinks = links.filterJson(blob_links, filterDate)
+
+    result['realestates']['table'] = links.jsonToHtml(filterLinks)
+    result['realestates']['map'] = links.createGmap(filterLinks)
 
     print("Returning data...")
     sys.stdout.flush()

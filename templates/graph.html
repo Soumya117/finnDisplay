@@ -3,62 +3,114 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
   <script src="{{ url_for('static',filename='styles/view.js') }}"></script>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/view.css') }}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/view.css') }}" media="screen"/>
   <title>Finn RealEstate Data</title>
 </head>
 
 <div class='wrap'>
-<div id="toogleGraph" onclick="toggleGraph()">Graphs</div>
-<br /><br />
-<div id="graph">
-  <div class="plot">
-    <img src="data:image/png;base64, {{ plot_url_links }}" style="width: 100%"><img src="data:image/png;base64, {{ plot_url_sold }}" style="width: 100%">
+  <div id="toogleGraph" onclick="toggle('graph')">Graphs</div>
+  <br/><br/>
+  <div id="graph">
+    <div class="plot">
+      <img src="data:image/png;base64, {{ plot_url_links }}" style="width: 100%"><img
+      src="data:image/png;base64, {{ plot_url_sold }}" style="width: 100%">
+    </div>
   </div>
-</div>
 
-<br /><br /><br />
-<div id="toogleReports" onclick="toggleReports()">Reports</div>
-<br /><br />
-<div id="reports">
+  <br/><br/><br/>
+  <div id="toogleReports" onclick="toggle('reports')">Reports</div>
+  <br/><br/>
+  <div id="reports">
+    <div id="view_toggle" onclick="toggle('view_data')">Upcoming Visnings</div>
+      <div id="view_data">
+        <input type="date" id="visnings_date">
+        <select id="visnings_mySelect" onchange="changeView('visnings')">
+          <option value="list" style="color:#000000;">List View</option>
+          <option value="map" style="color:#000000;">Map View</option>
+        </select>
+        <span id="loading_visnings" style="display: none">Fetching Results...!</span>
+        <br/><br/>
+        <div class="tab">
+          <button class="tablinks" onclick="viewData(event, 'Visnings')">Visnings</button>
+        </div>
+        <div id="Visnings" class="tabcontent">
+          <span onclick="this.parentElement.style.display='none'">x</span>
+          <div id="visnings_map" class="mapping"></div>
+          <div id="visnings_list"></div>
+        </div>
+      </div>
+  <br/><br/><br/>
+    <div id="sold_toggle" onclick="toggle('sold_data')"> Sold Houses</div>
+      <div id="sold_data">
+        <input type="date" id="sold_date">
+        <select id="sold_mySelect" onchange="changeView('sold')">
+          <option value="list" style="color:#000000;">List View</option>
+          <option value="map" style="color:#000000;">Map View</option>
+        </select>
+        <span id="loading_sold" style="display: none">Fetching Results...!</span>
+        <br/><br/>
+        <div class="tab">
+          <button class="tablinks" onclick="viewData(event, 'Sold')">RealEstates Sold</button>
+        </div>
+      </div>
+      <div id="Sold" class="tabcontent">
+        <span onclick="this.parentElement.style.display='none'">x</span>
+        <div id="sold_map" class="mapping"></div>
+        <div id="sold_list"></div>
+      </div>
+  <br/><br/><br/>
+    <div id="price_toggle" onclick="toggle('price_data')"> Price Statistics</div>
+      <div id="price_data">
+        <input type="date" id="price_date">
+        <select id="price_mySelect" onchange="changeView('price')">
+          <option value="list" style="color:#000000;">List View</option>
+          <option value="map" style="color:#000000;">Map View</option>
+        </select>
+        <span id="loading_price" style="display: none">Fetching Results...!</span>
+        <br/><br/>
+        <div class="tab">
+          <button class="tablinks" onclick="viewData(event, 'Price')">Price Statistics</button>
+        </div>
+      </div>
+      <div id="Price" class="tabcontent">
+        <span onclick="this.parentElement.style.display='none'">x</span>
+        <div id="price_map" class="mapping"></div>
+        <div id="price_list"></div>
+      </div>
+  <br/><br/><br/>
+    <div id="realestates_toggle" onclick="toggle('realestates_data')"> Realestates Ads</div>
+      <div id="realestates_data">
+        <input type="date" id="realestates_date">
+        <select id="realestates_mySelect" onchange="changeView('realestates')">
+          <option value="list" style="color:#000000;">List View</option>
+          <option value="map" style="color:#000000;">Map View</option>
+        </select>
+        <span id="loading_realestates" style="display: none">Fetching Results...!</span>
+        <br/><br/>
+        <div class="tab">
+          <button class="tablinks" onclick="viewData(event, 'RealEstates')">RealEstates Added</button>
+        </div>
+        <div id="RealEstates" class="tabcontent">
+          <span onclick="this.parentElement.style.display='none'">x</span>
+          <div id="realestates_map" class="mapping"></div>
+          <div id="realestates_list"></div>
+        </div>
+      </div>
 
-<input type="date" id="date">
-<select id="mySelect" onchange="changeView()">
-  <option value="list" style="color:#000000;">List View</option>
-  <option value="map" style="color:#000000;">Map View</option>
-</select>
-<span id="loading" style="display: none">Fetching Results...!</span>
-<br/><br/>
-<div class="tab">
-  <button class="tablinks" onclick="viewData(event, 'RealEstates')">RealEstates Added</button>
-  <button class="tablinks" onclick="viewData(event, 'Price')">Price Ups And Downs</button>
-  <button class="tablinks" onclick="viewData(event, 'Sold')">RealEstates Sold</button>
-  <button class="tablinks" onclick="viewData(event, 'Visnings')">Visnings</button>
-</div>
-
-<div id="RealEstates" class="tabcontent">
-  <span onclick="this.parentElement.style.display='none'">x</span>
-  <div id="realestates_map" class="mapping"></div>
-  <div id="realesates_list"></div>
-</div>
-
-<div id="Price" class="tabcontent">
-  <span onclick="this.parentElement.style.display='none'">x</span>
-  <div id="price_map" class="mapping"></div>
-  <div id="price_list"></div>
-</div>
-
-<div id="Sold" class="tabcontent">
-  <span onclick="this.parentElement.style.display='none'">x</span>
-  <div id="sold_map" class="mapping"></div>
-  <div id="sold_list"></div>
-</div>
-
-<div id="Visnings" class="tabcontent">
-  <span onclick="this.parentElement.style.display='none'">x</span>
-  <div id="visnings_map" class="mapping"></div>
-  <div id="visnings_list"></div>
-</div>
-</div>
+    <!--<input type="date" id="date">-->
+    <!--<select id="mySelect" onchange="changeView()">-->
+    <!--<option value="list" style="color:#000000;">List View</option>-->
+    <!--<option value="map" style="color:#000000;">Map View</option>-->
+    <!--</select>-->
+    <!--<span id="loading" style="display: none">Fetching Results...!</span>-->
+    <!--<br/><br/>-->
+    <!--<div class="tab">-->
+    <!--<button class="tablinks" onclick="viewData(event, 'RealEstates')">RealEstates Added</button>-->
+    <!--<button class="tablinks" onclick="viewData(event, 'Price')">Price Ups And Downs</button>-->
+    <!--<button class="tablinks" onclick="viewData(event, 'Sold')">RealEstates Sold</button>-->
+    <!--<button class="tablinks" onclick="viewData(event, 'Visnings')">Visnings</button>-->
+    <!--</div>-->
+  </div>
 </div>
 </body>
 </html>

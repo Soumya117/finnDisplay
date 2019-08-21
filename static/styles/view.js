@@ -9,33 +9,17 @@ jQuery(function ($) {
   document.body.appendChild(script);
 });
 
-
-function hideMap() {
-  document.getElementById('realestates_map').style.display = "none";
-  document.getElementById('realesates_list').style.display = "block";
-
-  document.getElementById('price_map').style.display = "none";
-  document.getElementById('price_list').style.display = "block";
-
-  document.getElementById('sold_map').style.display = "none";
-  document.getElementById('sold_list').style.display = "block";
-
-  document.getElementById('visnings_map').style.display = "none";
-  document.getElementById('visnings_list').style.display = "block";
+//TODO add arguments in the functions
+function hideMap(div) {
+  console.log("Hide map : ", div);
+  document.getElementById(div+'_map').style.display = "none";
+  document.getElementById(div+'_list').style.display = "block";
 }
 
-function showMap() {
-  document.getElementById('realestates_map').style.display = "block";
-  document.getElementById('realesates_list').style.display = "none";
-
-  document.getElementById('price_map').style.display = "block";
-  document.getElementById('price_list').style.display = "none";
-
-  document.getElementById('sold_map').style.display = "block";
-  document.getElementById('sold_list').style.display = "none";
-
-  document.getElementById('visnings_map').style.display = "block";
-  document.getElementById('visnings_list').style.display = "none";
+function showMap(div) {
+  console.log("Show map: ", div);
+  document.getElementById(div+'_map').style.display = "block";
+  document.getElementById(div+'_list').style.display = "none";
 
 }
 
@@ -93,6 +77,15 @@ function initialize(markers, infoWindowContent, divId) {
   });
 }
 
+function toggle(div_id) {
+  var x = document.getElementById(div_id);
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+
 function toggleGraph() {
   var x = document.getElementById("graph");
   if (x.style.display === "none") {
@@ -125,95 +118,64 @@ function viewData(evt, cityName) {
   evt.currentTarget.className += " active";
 }
 
-function changeView() {
-  var option = document.getElementById("mySelect").value;
+function changeView(id) {
+  console.log("Change view: ", id);
+  var option = document.getElementById(id+'_mySelect').value;
   if (option === 'list') {
-    hideMap();
+    hideMap(id);
   }
   else {
-    showMap()
+    showMap(id)
   }
 }
 
-function callback(result) {
+function callback(result, id) {
   var markers = [];
-  var info = [];
+  var infos = [];
 
-  var markers_links = [];
-  var info_links = [];
+  marker = result[id]['map']['markers'];
+  info = result[id]['map']['info'];
 
-  var markers_price = [];
-  var info_price = [];
+  table = result[id]['table'];
 
-  var markers_sold = [];
-  var info_sold = [];
+  var div_list = id+'_list';
+  var div_map = id+'_map';
 
-  var markers_visnings = [];
-  var info_visnings = [];
+  $('#div_list').empty();
+  $('#div_map').empty();
 
-  markers_links = result['links']['map']['markers'];
-  info_links = result['links']['map']['info'];
+  $('#div_list').append(table);
 
-  markers_price = result['price']['map']['markers'];
-  info_price = result['price']['map']['info'];
-
-  markers_sold = result['sold']['map']['markers'];
-  info_sold = result['sold']['map']['info'];
-
-  markers_visnings = result['visnings']['map']['markers'];
-  info_visnings = result['visnings']['map']['info'];
-
-  links = result['links']['table']
-  price = result['price']['table']
-  sold = result['sold']['table']
-  visnings = result['visnings']['table']
-
-  $('#realesates_list').empty();
-  $('#price_list').empty();
-  $('#sold_list').empty();
-  $('#visnings_list').empty();
-
-  $('#realestates_map').empty();
-  $('#price_map').empty();
-  $('#sold_map').empty();
-  $('#visnings_map').empty();
-
-  $('#realesates_list').append(links)
-  $('#price_list').append(price)
-  $('#sold_list').append(sold)
-  $('#visnings_list').append(visnings)
-
-  markers.push(markers_links);
-  markers.push(markers_price);
-  markers.push(markers_sold);
-  markers.push(markers_visnings);
-
-  info.push(info_links);
-  info.push(info_price);
-  info.push(info_sold);
-  info.push(info_visnings);
+  markers.push(marker);
+  infos.push(info);
 
   displayMap(markers, info)
 }
 
-$(document).ready(function () {
-  changeView();
-  document.getElementById("date").addEventListener("change", function () {
+function registerListener(id) {
+  document.getElementById(id+"_date").addEventListener("change", function () {
     var req = new XMLHttpRequest();
     req.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
+      if (this.readyState === 4 && this.status === 200) {
         var result = JSON.parse(this.responseText);
-        callback(result)
-        document.getElementById('date').disabled = false;
-        document.getElementById('mySelect').disabled = false;
-        document.getElementById('loading').style.display="none";
+        console.log("Result: ", result);
+        callback(result, id);
+        document.getElementById(id+'_date').disabled = false;
+        document.getElementById(id+'_mySelect').disabled = false;
+        document.getElementById('loading_'+id).style.display = "none";
       }
     };
-    document.getElementById('loading').style.display="block";
-    document.getElementById('date').disabled = true;
-    document.getElementById('mySelect').disabled = true;
-    req.open('POST', '/status');
+    document.getElementById('loading_'+id).style.display = "block";
+    document.getElementById(id+'_date').disabled = true;
+    document.getElementById(id+'_mySelect').disabled = true;
+    req.open('POST', '/status/'+id);
     req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
     req.send("date=" + this.value);
   });
+}
+
+$(document).ready(function () {
+  var div_ids = ['visnings', 'sold', 'price', 'realestates'];
+  div_ids.forEach(changeView);
+  div_ids.forEach(registerListener)
 });

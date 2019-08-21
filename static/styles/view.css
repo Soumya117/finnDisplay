@@ -15,7 +15,7 @@
     select{
         background-color: azure;
     }
-    #toogleGraph,#toogleReports {
+    #toogleGraph,#toogleReports,#view_toggle,#sold_toggle,#price_toggle,#realestates_toggle {
       overflow: hidden;
       height: 35px;
       color: #DDECEE;
@@ -85,7 +85,7 @@
       overflow-y: scroll;
     }
 
-    #loading{
+    #loading_price, #loading_realestates, #loading_sold, #loading_visnings{
         color: #D3E7E9;
         font-size: 25px;
     }
