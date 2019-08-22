@@ -114,10 +114,8 @@ function callback(result, id) {
   table = result[id]['table'];
 
   var div_list = '#'+id+'_list';
-  var div_map = '#'+id+'_map';
 
   $(div_list).empty();
-  $(div_map).empty();
   document.getElementById(id+'_map').style.display = "none";
 
   $(div_list).append(table);
@@ -138,6 +136,7 @@ function registerListener(id) {
         document.getElementById(id+'_date').disabled = false;
         document.getElementById(id+'_mySelect').disabled = false;
         document.getElementById('loading_'+id).style.display = "none";
+        changeView(id)
       }
     };
     document.getElementById('loading_'+id).style.display = "block";
@@ -167,8 +166,8 @@ function loadPrices(id)
 
 $(document).ready(function () {
   var div_ids = ['visnings', 'sold', 'realestates'];
-  div_ids.forEach(changeView);
   div_ids.forEach(registerListener);
+  div_ids.forEach(changeView);
 
   // set today's date for visnings.
   var today = new Date().toISOString().split("T")[0];

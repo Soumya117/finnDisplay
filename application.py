@@ -119,13 +119,14 @@ def getSold():
     result['sold'] = {}
 
     blob_sold = readBlob('sold.json')
+    blob_visnings = readBlob('visning.json')
 
     print("Filtering jsons..!!")
     sys.stdout.flush()
 
     filterSold = sold.filterJson(blob_sold, filterDate)
 
-    result['sold']['table'] = sold.jsonToHtml(filterSold)
+    result['sold']['table'] = sold.jsonToHtml(filterSold, blob_visnings)
     result['sold']['map'] = sold.createGmap(filterSold)
 
     print("Returning data...")
@@ -139,13 +140,14 @@ def getPrice():
     result['price'] = {}
 
     blob_pris = readBlob('multiplePris.json')
+    blob_visnings = readBlob('visning.json')
 
     print("Filtering jsons..!!")
     sys.stdout.flush()
 
     filterPrice = json.loads(blob_pris)
 
-    result['price']['table'] = multiplePris.jsonToHtml(filterPrice)
+    result['price']['table'] = multiplePris.jsonToHtml(filterPrice, blob_visnings)
     result['price']['map'] = multiplePris.createGmap(filterPrice)
 
     print("Returning data...")
@@ -161,13 +163,14 @@ def getRealestates():
     result['realestates'] = {}
 
     blob_links = readBlob('links.json')
+    blob_visnings = readBlob('visning.json')
 
     print("Filtering jsons..!!")
     sys.stdout.flush()
 
     filterLinks = links.filterJson(blob_links, filterDate)
 
-    result['realestates']['table'] = links.jsonToHtml(filterLinks)
+    result['realestates']['table'] = links.jsonToHtml(filterLinks, blob_visnings)
     result['realestates']['map'] = links.createGmap(filterLinks)
 
     print("Returning data...")
