@@ -10,14 +10,21 @@ jQuery(function ($) {
 });
 
 function hideMap(div) {
+
+  if( !$('#'+div+'_list').is(':empty') )
+  {
+    document.getElementById(div+'_list').style.display = "block";
+  }
   document.getElementById(div+'_map').style.display = "none";
-  document.getElementById(div+'_list').style.display = "block";
 }
 
 function showMap(div) {
-  document.getElementById(div+'_map').style.display = "block";
-  document.getElementById(div+'_list').style.display = "none";
 
+  if( !$('#'+div+'_map').is(':empty') )
+  {
+    document.getElementById(div+'_map').style.display = "block";
+  }
+  document.getElementById(div+'_list').style.display = "none";
 }
 
 function initialize(markers, infoWindowContent, divId) {
@@ -111,6 +118,7 @@ function callback(result, id) {
 
   $(div_list).empty();
   $(div_map).empty();
+  document.getElementById(id+'_map').style.display = "none";
 
   $(div_list).append(table);
 
