@@ -126,7 +126,6 @@ function registerListener(id) {
     req.onreadystatechange = function () {
       if (this.readyState === 4 && this.status === 200) {
         var result = JSON.parse(this.responseText);
-        console.log("Result: ", result);
         callback(result, id);
         document.getElementById(id+'_date').disabled = false;
         document.getElementById(id+'_mySelect').disabled = false;
@@ -142,8 +141,33 @@ function registerListener(id) {
   });
 }
 
+function loadPrices(id)
+{
+   var req = new XMLHttpRequest();
+    req.onreadystatechange = function () {
+      if (this.readyState === 4 && this.status === 200) {
+        var result = JSON.parse(this.responseText);
+        callback(result, id);
+        document.getElementById(id+'_mySelect').disabled = false;
+      }
+    };
+    document.getElementById(id+'_mySelect').disabled = true;
+    req.open('POST', '/status/'+id);
+    req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+    req.send("date=" + this.value);
+}
+
 $(document).ready(function () {
-  var div_ids = ['visnings', 'sold', 'price', 'realestates'];
+  var div_ids = ['visnings', 'sold', 'realestates'];
   div_ids.forEach(changeView);
-  div_ids.forEach(registerListener)
+  div_ids.forEach(registerListener);
+
+  // set today's date for visnings.
+  var today = new Date().toISOString().split("T")[0];
+  document.getElementById("visnings_date").setAttribute("min", today);
+  document.getElementById("sold_date").setAttribute("max", today);
+
+  //call price changes anyways
+  changeView('price');
+  loadPrices('price');
 });

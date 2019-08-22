@@ -101,7 +101,7 @@ def getVisnings():
     print("Filtering jsons..!!")
     sys.stdout.flush()
 
-    filterVisnings = visning.filterJson(blob_visnings) #TODO Filter
+    filterVisnings = visning.filterJson(blob_visnings, filterDate)
 
     result['visnings']['table'] = visning.jsonToHtml(filterVisnings)
     result['visnings']['map']= visning.createGmap(filterVisnings)
@@ -135,8 +135,6 @@ def getSold():
 
 @app.route('/status/price', methods=['GET', 'POST'])
 def getPrice():
-    filterDate = receiveDate()
-
     result = {}
     result['price'] = {}
 
@@ -145,7 +143,7 @@ def getPrice():
     print("Filtering jsons..!!")
     sys.stdout.flush()
 
-    filterPrice = json.loads(blob_pris) #TODO Filter
+    filterPrice = json.loads(blob_pris)
 
     result['price']['table'] = multiplePris.jsonToHtml(filterPrice)
     result['price']['map'] = multiplePris.createGmap(filterPrice)

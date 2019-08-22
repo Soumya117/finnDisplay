@@ -2,24 +2,25 @@ import json
 import sys
 import datetime
 
-def parseDate(dateStr):
+def parseDate(dateStr, inputDate):
+    #prepare proper date from the visning dates
     date = dateStr.split(", ")[0]
     day = date.split(" ")
     now = datetime.datetime.now()
     tmpDate = day[1].strip('.') + " " + day[2] + " " +  str(now.year)
     finalDate = datetime.datetime.strptime(tmpDate, '%d %B %Y').strftime('%Y-%m-%d')
-    current = datetime.datetime.today().strftime('%Y-%m-%d')
-    if current <= finalDate:
+
+    if inputDate == finalDate:
         return True
 
-def filterJson(jsonStr):
+def filterJson(jsonStr, filterDate):
     result = {}
     result['links'] = []
     data = json.loads(jsonStr)
     for item in data['links']:
         upcoming = False
         for date in item['visnings']:
-            if parseDate(date):
+            if parseDate(date, filterDate):
                 upcoming = True
                 break
         if upcoming:

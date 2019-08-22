@@ -61,12 +61,11 @@
   <br/><br/><br/>
     <div id="price_toggle" onclick="toggle('price_data')"> Price Statistics</div>
       <div id="price_data">
-        <input type="date" id="price_date">
+         <br/>
         <select id="price_mySelect" onchange="changeView('price')">
           <option value="list" style="color:#000000;">List View</option>
           <option value="map" style="color:#000000;">Map View</option>
         </select>
-        <span id="loading_price" style="display: none">Fetching Results...!</span>
         <br/><br/>
         <div class="tab">
           <button class="tablinks" onclick="viewData(event, 'Price')">Price Statistics</button>
