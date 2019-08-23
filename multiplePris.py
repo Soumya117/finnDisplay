@@ -19,34 +19,44 @@ def filterJson(jsonStr, inputData):
             result['links'].append(res)
     return result
 
-def jsonToHtml(jsonStr, blob_visning):
+def jsonToHtml(jsonStr, blob_visning, blob_sold):
     # reload(sys)
     # sys.setdefaultencoding('utf-8')
 
+    sold_houses = json.loads(blob_sold)
     visnings = json.loads(blob_visning)
-    tstr1 ="""<table>"""
+    total = len(jsonStr['links'])
+    tstr1 ="""<p><font size="5" color="white">Total: {total} </font></p>
+    <table bgcolor="#2a3c3c" border="1px">""".format(total=total)
     for item in jsonStr['links']:
-
         #check if the link is present in the visnings.
         visning = {}
+        sold = {}
+        sold['status'] = ""
+        sold['time'] = ""
         for view in visnings['links']:
             if item['link'] in view['link']:
                 visning = view['visnings']
+                break
+        for sold_item in sold_houses['links']:
+            if item['link'] in sold_item['link']:
+                sold['status'] = sold_item['status']
+                sold['time'] = sold_item['time'].split('T')[0]
                 break
 
         map_link = "https://www.google.co.in/maps/place/"+item['details']['address']
         tstr2 = """
         <tr>
-        <th bgcolor="#2a3c3c" height="30">
+        <th height="40" width="15%">
         <a href="{link}" style="color:#FFFFFF;" target="_blank">{text}</a>
         </th>
-        <td height="40" bgcolor="#2a3c3c" style="padding-right: 25px;padding-left: 25px;">
+        <td height="40" width="15%" style="padding-right: 15px;padding-left:15px;">
         <font size="3" color="white">
         <a href="{map_link}" style="color:#FFFFFF;" target="_blank">{address}</a>, {area}
         </font>
         </td>
-        <td>
-        <table bgcolor="#2a3c3c">""".format(link=item['link'],
+        <td height="40" width="9%">
+        <table height="40">""".format(link=item['link'],
                                             address=item['details']['address'],
                                             text=item['details']['text'],
                                             area=item['details']['area'],
@@ -58,23 +68,26 @@ def jsonToHtml(jsonStr, blob_visning):
             time = pris['time'].split('T')
             tstr3="""
             <tr>
-            <td height="30" style="padding-right: 25px;padding-left: 25px;"><font size="3" color="white">{price}</font></td>
-            <td height="30"style="padding-right: 25px;padding-left: 25px;"><font size="3" color="white">{time}</font></td>
+            <td style="padding-right: 15px;padding-left: 15px;"><font size="3" color="white">{price}</font></td>
+            <td style="padding-right: 15px;padding-left: 15px;"><font size="3" color="white">{time}</font></td>
             </tr>""".format(price=price, time=time[0])
             tstr1+=tstr3
         tstr4="""</table></td>"""
         tstr1+=tstr4
-        tstr1+= """<td><table bgcolor="#2a3c3c">"""
+        tstr1+= """<td width="10%"><table height="40">"""
         for date in visning:
             tstr5="""
             <tr>
-            <td height="40"  width="300" style="padding-right: 25px;padding-left: 25px;"><font size="3" color="white">{date}</font></td>
+            <td style="padding-right: 15px;padding-left: 15px;"><font size="3" color="white">{date}</font></td>
             </tr>""".format(date=date)
             tstr1+=tstr5
         tstr6="""
         </table>
         </td>
-        </tr>"""
+        <td  width="9%" style="padding-right: 15px;padding-left: 15px;">
+        <font size="3" color="white">{status}&nbsp;&nbsp;{time}
+        </font></td>
+        </tr>""".format(status=sold['status'], time=sold['time'])
         tstr1+=tstr6
     tstr7="""
     </table>"""

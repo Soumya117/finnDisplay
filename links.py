@@ -21,10 +21,11 @@ def filterJson(jsonStr, inputData):
 def jsonToHtml(jsonStr, blob_visning):
     # reload(sys)
     # sys.setdefaultencoding('utf-8')
-
+    total = len(jsonStr['links'])
     visnings = json.loads(blob_visning)
 
-    tstr1 ="""<table>"""
+    tstr1 ="""<p><font size="5" color="white">Total: {total} </font></p>
+    <table bgcolor="#2a3c3c" border="1px">""".format(total=total)
     for item in jsonStr["links"]:
 
         #check if the link is present in the visnings.
@@ -36,16 +37,16 @@ def jsonToHtml(jsonStr, blob_visning):
 
         map_link = "https://www.google.co.in/maps/place/"+item['address']
         tstr2 = """<tr>
-            <th bgcolor="#2a3c3c" height="60" width="40%">
+            <th  height="60" width="18%">
             <a href="{link}" style="color:#FFFFFF;" target="_blank">{text}</a>
             </th>
-            <td height="40" bgcolor="#2a3c3c" style="padding-right: 25px;padding-left: 25px;">
+            <td height="40" width="15%" style="padding-right: 15px;padding-left: 15px;">
             <font size="3" color="white">
             <a href="{map_link}" style="color:#FFFFFF;" target="_blank">{address}</a>, {area}, {price}
             </font>
             </td>
-            <td>
-            <table bgcolor="#2a3c3c">
+            <td width="8%">
+            <table height="40">
             """.format(link=item['link'],
                        text=item['text'],
                        address=item['address'],
@@ -56,7 +57,7 @@ def jsonToHtml(jsonStr, blob_visning):
         for date in visning:
             tstr3="""
             <tr>
-            <td height="40"  width="300" style="padding-right: 25px;padding-left: 25px;"><font size="3" color="white">{date}</font></td>
+            <td style="padding-right: 15px;padding-left: 15px;"><font size="3" color="white">{date}</font></td>
             </tr>""".format(date=date)
             tstr1+=tstr3
         tstr4="""

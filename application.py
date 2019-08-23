@@ -141,13 +141,14 @@ def getPrice():
 
     blob_pris = readBlob('multiplePris.json')
     blob_visnings = readBlob('visning.json')
+    blob_sold = readBlob('sold.json')
 
     print("Filtering jsons..!!")
     sys.stdout.flush()
 
     filterPrice = json.loads(blob_pris)
 
-    result['price']['table'] = multiplePris.jsonToHtml(filterPrice, blob_visnings)
+    result['price']['table'] = multiplePris.jsonToHtml(filterPrice, blob_visnings, blob_sold)
     result['price']['map'] = multiplePris.createGmap(filterPrice)
 
     print("Returning data...")

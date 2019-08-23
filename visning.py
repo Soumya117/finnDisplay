@@ -39,7 +39,9 @@ def filterJson(jsonStr, filterDate):
 def jsonToHtml(jsonStr):
     # reload(sys)
     # sys.setdefaultencoding('utf-8')
-    tstr1 ="""<table>"""
+    total = len(jsonStr['links'])
+    tstr1 ="""<p><font size="5" color="white">Total: {total} </font></p>
+    <table>""".format(total=total)
     for item in jsonStr['links']:
         map_link = "https://www.google.co.in/maps/place/"+item['details']['address']
         tstr2 = """
