@@ -15,7 +15,7 @@
     select{
         background-color: azure;
     }
-    #toogleGraph,#toogleReports,#view_toggle,#sold_toggle,#price_toggle,#realestates_toggle {
+    #toggleGraph,#toggleReports,#view_toggle,#sold_toggle,#price_toggle,#realestates_toggle {
       overflow: hidden;
       height: 35px;
       color: #DDECEE;
@@ -24,7 +24,33 @@
       font-size: 25px;
       background-color: #444444;
     }
-
+    #expandGraph,#expandReports{
+      font-size: 15px;
+      color: white;
+      float: right;
+      text-align: center;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    #expandViews,#expandAds,#expandPrice,#expandSold {
+      font-size: 12px;
+      color: white;
+      float: right;
+      text-align: center;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    #view_toggle,#sold_toggle,#price_toggle,#realestates_toggle {
+      overflow: hidden;
+      height: 25px;
+      color: #DDECEE;
+      border: 1px outset #ccc;
+      font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+      font-size: 18px;
+      background-color: #444444;
+    }
     .tab {
       overflow: hidden;
       border: 1px outset #ccc;
@@ -109,3 +135,47 @@
         overflow-y: scroll;
         overflow-x: scroll;
      }
+
+    .tooltip {
+        color: white;
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted black;
+    }
+
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: black;
+        color: #ffffff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+        /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
+        opacity: 0;
+        transition: opacity 1s;
+    }
+
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+    }
+
+    .tooltip .tooltiptext::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: black transparent transparent transparent;
+    }
+
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+    }

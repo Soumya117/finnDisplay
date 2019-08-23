@@ -8,7 +8,14 @@
 </head>
 
 <div class='wrap'>
-  <div id="toogleGraph" onclick="toggle('graph')">Graphs</div>
+  <div id="toggleGraph" onclick="toggle('graph')"><span>Graphs</span>
+  <span id ="expandGraph">
+    Expand/Collapse
+  </span>
+  </div>
+  <p style="font-size: 25px; color: white; text-align: right;" >
+    <a href="#reports" style="color:#FFFFFF;">Click to see detailed reports.</a>
+  </p>
   <br/><br/>
   <div id="graph">
     <div class="plot">
@@ -18,16 +25,27 @@
   </div>
 
   <br/><br/><br/>
-  <div id="toogleReports" onclick="toggle('reports')">Reports</div>
+  <div id="toggleReports" onclick="toggle('reports')">Reports
+  <span id ="expandReports">
+    Expand/Collapse
+  </span>
+  </div>
   <br/><br/>
   <div id="reports">
-    <div id="view_toggle" onclick="toggle('view_data')">Upcoming Visnings</div>
+    <div id="view_toggle" onclick="toggle('view_data')">Upcoming Visnings
+      <span id ="expandViews">
+        Expand/Collapse
+     </span>
+    </div>
       <div id="view_data">
         <input type="date" id="visnings_date">
         <select id="visnings_mySelect" onchange="changeView('visnings')">
           <option value="list" style="color:#000000;">List View</option>
           <option value="map" style="color:#000000;">Map View</option>
         </select>
+       <div class="tooltip">(?)
+           <span class="tooltiptext">Select only upcoming dates.</span>
+       </div>
         <span id="loading_visnings" style="display: none">Fetching Results...!</span>
         <br/><br/>
         <div class="tab">
@@ -40,13 +58,20 @@
         </div>
       </div>
   <br/><br/><br/>
-    <div id="sold_toggle" onclick="toggle('sold_data')"> Sold Houses</div>
+    <div id="sold_toggle" onclick="toggle('sold_data')"> Sold Houses
+      <span id ="expandSold">
+        Expand/Collapse
+      </span>
+    </div>
       <div id="sold_data">
         <input type="date" id="sold_date">
         <select id="sold_mySelect" onchange="changeView('sold')">
           <option value="list" style="color:#000000;">List View</option>
           <option value="map" style="color:#000000;">Map View</option>
         </select>
+       <div class="tooltip">(?)
+           <span class="tooltiptext">Select date less than or equal to today's date.</span>
+       </div>
         <span id="loading_sold" style="display: none">Fetching Results...!</span>
         <br/><br/>
         <div class="tab">
@@ -59,7 +84,11 @@
         </div>
       </div>
   <br/><br/><br/>
-    <div id="price_toggle" onclick="toggle('price_data')"> Price Statistics</div>
+    <div id="price_toggle" onclick="toggle('price_data')"> Price Statistics
+      <span id ="expandPrice">
+        Expand/Collapse
+      </span>
+    </div>
       <div id="price_data">
          <br/>
         <select id="price_mySelect" onchange="changeView('price')">
@@ -77,7 +106,11 @@
         </div>
       </div>
   <br/><br/><br/>
-    <div id="realestates_toggle" onclick="toggle('realestates_data')"> Realestates Ads</div>
+    <div id="realestates_toggle" onclick="toggle('realestates_data')"> Realestates Ads
+      <span id ="expandAds">
+         Expand/Collapse
+      </span>
+    </div>
       <div id="realestates_data">
         <input type="date" id="realestates_date">
         <select id="realestates_mySelect" onchange="changeView('realestates')">
