@@ -24,6 +24,19 @@
       font-size: 25px;
       background-color: #444444;
     }
+
+    #report_img,#graph_img
+    {
+        float: right;
+        width: 7%;
+        z-index: 30
+    }
+    #view_img,#ads_img,#sold_img,#price_img
+    {
+        float: right;
+        width: 5%;
+        z-index: 30
+    }
     #expandGraph,#expandReports{
       font-size: 15px;
       color: white;
