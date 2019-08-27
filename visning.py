@@ -4,11 +4,26 @@ import datetime
 
 def parseDate(dateStr, inputDate):
     #prepare proper date from the visning dates
+    months = {
+		"januar" : 1,
+		"februar" : 2,
+		"mars" : 3,
+		"april" : 4,
+		"mai" : 5,
+		"juni" : 6,
+		"juli" : 7,
+		"august" : 8,
+		"september" : 9,
+		"oktober" : 10,
+		"november" : 11,
+		"desember" : 12
+	}
     date = dateStr.split(", ")[0]
     day = date.split(" ")
     now = datetime.datetime.now()
-    tmpDate = day[1].strip('.') + " " + day[2] + " " +  str(now.year)
-    finalDate = datetime.datetime.strptime(tmpDate, '%d %B %Y').strftime('%Y-%m-%d')
+    month = str(months[day[2]])
+    tmpDate = day[1].strip('.') + " " + month + " " +  str(now.year)
+    finalDate = datetime.datetime.strptime(tmpDate, '%d %m %Y').strftime('%Y-%m-%d')
 
     if inputDate == finalDate:
         return True
