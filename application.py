@@ -37,7 +37,7 @@ def readJson(jsonStr):
     data = json.loads(jsonStr)
     for item in data["links"]:
         time = item['time'].split('T')
-        day = prepareDate(time[0])
+        day = time[0]
         if day in dict:
             dict[day] += 1
         else:
@@ -53,8 +53,8 @@ def prepareGraph(dict, yLabel, title):
     font = {'size'   : 25}
     plt.rc('font', **font)
     dict_size = len(dict)
-    if len(dict) > 14:
-        dict_size = 14
+    if len(dict) > 10:
+        dict_size = 10
     for k in sorted(dict)[len(dict)-dict_size:len(dict)]:
         x.append(k)
         y.append(dict[k])
