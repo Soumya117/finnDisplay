@@ -2,7 +2,6 @@
 from azure.storage.blob import BlockBlobService, PublicAccess
 from flask import jsonify
 from flask import request
-container_name ='finnblob'
 from flask import Flask, render_template
 app = Flask(__name__)
 import json
@@ -19,9 +18,10 @@ from datetime import datetime
 
 def readBlob(blobName):
     print("Reading blob: ", blobName)
+    container_name ='finnblob'
     sys.stdout.flush()
-    block_blob_service = BlockBlobService(account_name='finnminingblob',
-                                          account_key='B3GcfOYBEci9aLYSFo6+KZpahLM52FlMGpFOvK/sD7HbeYspxCCCcAJG0ffnaXlmn8YfgSEarzrCyg5bIRN5Fg==')
+    block_blob_service = BlockBlobService(account_name='account_name',
+                                          account_key='account_key')
     blob = block_blob_service.get_blob_to_text(container_name, blobName)
     return blob.content
 
@@ -37,7 +37,7 @@ def readJson(jsonStr):
     data = json.loads(jsonStr)
     for item in data["links"]:
         time = item['time'].split('T')
-        day = prepareDate(time[0])
+        day = time[0]
         if day in dict:
             dict[day] += 1
         else:
@@ -53,8 +53,8 @@ def prepareGraph(dict, yLabel, title):
     font = {'size'   : 25}
     plt.rc('font', **font)
     dict_size = len(dict)
-    if len(dict) > 14:
-        dict_size = 14
+    if len(dict) > 10:
+        dict_size = 10
     for k in sorted(dict)[len(dict)-dict_size:len(dict)]:
         x.append(k)
         y.append(dict[k])
