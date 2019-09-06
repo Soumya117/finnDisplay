@@ -2,7 +2,6 @@
 from azure.storage.blob import BlockBlobService, PublicAccess
 from flask import jsonify
 from flask import request
-container_name ='finnblob'
 from flask import Flask, render_template
 app = Flask(__name__)
 import json
@@ -19,6 +18,7 @@ from datetime import datetime
 
 def readBlob(blobName):
     print("Reading blob: ", blobName)
+    container_name ='finnblob'
     sys.stdout.flush()
     block_blob_service = BlockBlobService(account_name='accountName',
                                           account_key='accountKey')
