@@ -25,11 +25,20 @@ Browse link: http://finn117.appspot.com/
 
 Sample Graph
 
-![alt text](https://github.com/Soumya117/finnDisplay/blob/master/sold.png) <br /><br />
+![alt text](https://github.com/Soumya117/finnDisplay/blob/master/Selection_140.png) <br /><br />
 
 
 
-![alt text](https://github.com/Soumya117/finnDisplay/blob/master/realstatepng.png)
+![alt text](https://github.com/Soumya117/finnDisplay/blob/master/Selection_141.png) <br /><br />
+
+
+
+![alt text](https://github.com/Soumya117/finnDisplay/blob/master/Selection_142.png) <br /><br />
+
+
+
+![alt text](https://github.com/Soumya117/finnDisplay/blob/master/Selection_143.png) <br /><br />
+
 
 
 
