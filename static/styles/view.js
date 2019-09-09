@@ -173,6 +173,7 @@ $(document).ready(function () {
   var today = new Date().toISOString().split("T")[0];
   document.getElementById("visnings_date").setAttribute("min", today);
   document.getElementById("sold_date").setAttribute("max", today);
+  document.getElementById("realestates_date").setAttribute("max", today);
 
   //call price changes anyways
   changeView('price');
