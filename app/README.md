@@ -6,26 +6,40 @@ graphical representation. It also shows the overall data collected from finn in 
 The app has two views: List view and map view. User can select between these views. Uses google maps api to fetch the geocode location of the address and then marks and displays the google maps.
 
 It displays the following:
+
+Graph
+1. Statistics of realestates added.
+2. Statistics of realestates sold.
+
+Reports
 1. Realestates added that day.
 2. Price Changes for the same house.
 3. Houses sold on that day.
 4. Visnings added.
 
+DEPLOYMENT
 
-Work In Progress:
-Plan is to add some filter and search that can be used by the user.
+The app is now deployed on google cloud.
+Browse link: http://finn117.appspot.com/
 
 
 Sample Graph
 
-![alt text](https://github.com/Soumya117/finnDisplay/blob/master/sold.png) <br /><br />
+![alt text](https://github.com/Soumya117/finnDisplay/blob/master/Selection_140.png) <br /><br />
 
 
 
-![alt text](https://github.com/Soumya117/finnDisplay/blob/master/realstatepng.png)
+![alt text](https://github.com/Soumya117/finnDisplay/blob/master/Selection_141.png) <br /><br />
+
+
+
+![alt text](https://github.com/Soumya117/finnDisplay/blob/master/Selection_142.png) <br /><br />
+
+
+
+![alt text](https://github.com/Soumya117/finnDisplay/blob/master/Selection_143.png) <br /><br />
+
 
 
 
 <br />
-
-Test Link: https://finn-display.azurewebsites.net/
