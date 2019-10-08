@@ -20,7 +20,6 @@ from logger import log
 def readBlob(blobName):
     log("Reading blob: {}".format(blobName))
     container_name ='finnblob'
-    sys.stdout.flush()
     block_blob_service = BlockBlobService(account_name='account_name',
                                           account_key='account_key')
     blob = block_blob_service.get_blob_to_text(container_name, blobName)
@@ -87,7 +86,6 @@ def receiveDate():
     filterDate = request.form['date']
     filterDate = filterDate.encode('ascii','ignore').decode('utf-8')
     log("Received date: {}".format(filterDate))
-    sys.stdout.flush()
     return filterDate
 
 @app.route('/status/visnings', methods=['GET', 'POST'])
@@ -100,7 +98,6 @@ def getVisnings():
     blob_visnings = readBlob('visning.json')
 
     log("Filtering jsons..!!")
-    sys.stdout.flush()
 
     filterVisnings = visning.filterJson(blob_visnings, filterDate)
 
@@ -108,7 +105,6 @@ def getVisnings():
     result['visnings']['map']= visning.createGmap(filterVisnings)
 
     log("Returning data...")
-    sys.stdout.flush()
 
     return jsonify(result)
 
@@ -123,7 +119,6 @@ def getSold():
     blob_visnings = readBlob('visning.json')
 
     log("Filtering jsons..!!")
-    sys.stdout.flush()
 
     filterSold = sold.filterJson(blob_sold, filterDate)
 
@@ -131,7 +126,6 @@ def getSold():
     result['sold']['map'] = sold.createGmap(filterSold)
 
     log("Returning data...")
-    sys.stdout.flush()
 
     return jsonify(result)
 
@@ -145,7 +139,6 @@ def getPrice():
     blob_sold = readBlob('sold.json')
 
     log("Filtering jsons..!!")
-    sys.stdout.flush()
 
     filterPrice = json.loads(blob_pris)
 
@@ -153,7 +146,6 @@ def getPrice():
     result['price']['map'] = multiplePris.createGmap(filterPrice)
 
     log("Returning data...")
-    sys.stdout.flush()
 
     return jsonify(result)
 
@@ -168,7 +160,6 @@ def getRealestates():
     blob_visnings = readBlob('visning.json')
 
     log("Filtering jsons..!!")
-    sys.stdout.flush()
 
     filterLinks = links.filterJson(blob_links, filterDate)
 
@@ -176,7 +167,6 @@ def getRealestates():
     result['realestates']['map'] = links.createGmap(filterLinks)
 
     log("Returning data...")
-    sys.stdout.flush()
 
     return jsonify(result)
 

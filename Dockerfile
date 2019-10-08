@@ -6,4 +6,5 @@ RUN apk --update add bash vim
 ENV STATIC_URL /static
 ENV STATIC_PATH /var/www/app/static
 COPY ./app/requirements.txt /var/www/requirements.txt
+COPY ./app/static /var/www/app/static
 RUN pip3 install -r /var/www/requirements.txt
