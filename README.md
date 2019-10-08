@@ -20,7 +20,7 @@ Reports
 DEPLOYMENT
 
 The app is now deployed on google cloud.
-Browse link: http://finn117.appspot.com/
+Browse link: http://35.232.182.116:9871/
 
 
 Sample Graph
