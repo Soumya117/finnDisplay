@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  webapp:
+    image: finndisplay
+    container_name: displayapp
+    ports:
+      - 9871:80
+    volumes:
+      - ./app:/app
+      - ./nginx.conf:/etc/nginx/nginx.conf

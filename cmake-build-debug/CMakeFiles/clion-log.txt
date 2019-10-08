@@ -1,1 +1,4 @@
-CMakeLists.txt not found in /home/soumya/azure/python/finnDisplay
+/home/soumya/CLION/clion-2017.2.1/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/soumya/google/finnDisplayGoogle/finnDisplay
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/soumya/google/finnDisplayGoogle/finnDisplay/cmake-build-debug

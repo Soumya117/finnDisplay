@@ -5,7 +5,7 @@ from flask import request
 from flask import Flask, render_template
 app = Flask(__name__)
 import json
-import seaborn as sns
+#import seaborn as sns
 import io
 import base64
 import matplotlib.pyplot as plt
@@ -15,9 +15,10 @@ import sold
 import visning
 import sys
 from datetime import datetime
+from logger import log
 
 def readBlob(blobName):
-    print("Reading blob: ", blobName)
+    log("Reading blob: {}".format(blobName))
     container_name ='finnblob'
     sys.stdout.flush()
     block_blob_service = BlockBlobService(account_name='account_name',
@@ -47,7 +48,7 @@ def readJson(jsonStr):
 def prepareGraph(dict, yLabel, title):
     img = io.BytesIO()
     plt.switch_backend('SVG')
-    sns.set_style("dark") #E.G.
+ #   sns.set_style("dark") #E.G.
     x = []
     y = []
     font = {'size'   : 25}
@@ -85,7 +86,7 @@ def graphSold(jsonStr):
 def receiveDate():
     filterDate = request.form['date']
     filterDate = filterDate.encode('ascii','ignore').decode('utf-8')
-    print("Received date: ", filterDate)
+    log("Received date: {}".format(filterDate))
     sys.stdout.flush()
     return filterDate
 
@@ -98,7 +99,7 @@ def getVisnings():
 
     blob_visnings = readBlob('visning.json')
 
-    print("Filtering jsons..!!")
+    log("Filtering jsons..!!")
     sys.stdout.flush()
 
     filterVisnings = visning.filterJson(blob_visnings, filterDate)
@@ -106,7 +107,7 @@ def getVisnings():
     result['visnings']['table'] = visning.jsonToHtml(filterVisnings)
     result['visnings']['map']= visning.createGmap(filterVisnings)
 
-    print("Returning data...")
+    log("Returning data...")
     sys.stdout.flush()
 
     return jsonify(result)
@@ -121,7 +122,7 @@ def getSold():
     blob_sold = readBlob('sold.json')
     blob_visnings = readBlob('visning.json')
 
-    print("Filtering jsons..!!")
+    log("Filtering jsons..!!")
     sys.stdout.flush()
 
     filterSold = sold.filterJson(blob_sold, filterDate)
@@ -129,7 +130,7 @@ def getSold():
     result['sold']['table'] = sold.jsonToHtml(filterSold, blob_visnings)
     result['sold']['map'] = sold.createGmap(filterSold)
 
-    print("Returning data...")
+    log("Returning data...")
     sys.stdout.flush()
 
     return jsonify(result)
@@ -143,7 +144,7 @@ def getPrice():
     blob_visnings = readBlob('visning.json')
     blob_sold = readBlob('sold.json')
 
-    print("Filtering jsons..!!")
+    log("Filtering jsons..!!")
     sys.stdout.flush()
 
     filterPrice = json.loads(blob_pris)
@@ -151,7 +152,7 @@ def getPrice():
     result['price']['table'] = multiplePris.jsonToHtml(filterPrice, blob_visnings, blob_sold)
     result['price']['map'] = multiplePris.createGmap(filterPrice)
 
-    print("Returning data...")
+    log("Returning data...")
     sys.stdout.flush()
 
     return jsonify(result)
@@ -166,7 +167,7 @@ def getRealestates():
     blob_links = readBlob('links.json')
     blob_visnings = readBlob('visning.json')
 
-    print("Filtering jsons..!!")
+    log("Filtering jsons..!!")
     sys.stdout.flush()
 
     filterLinks = links.filterJson(blob_links, filterDate)
@@ -174,7 +175,7 @@ def getRealestates():
     result['realestates']['table'] = links.jsonToHtml(filterLinks, blob_visnings)
     result['realestates']['map'] = links.createGmap(filterLinks)
 
-    print("Returning data...")
+    log("Returning data...")
     sys.stdout.flush()
 
     return jsonify(result)

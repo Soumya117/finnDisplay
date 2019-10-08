@@ -1,6 +1,0 @@
-runtime: python37
-instance_class: F4_1G
-service: default
-entrypoint: gunicorn -b :$PORT main:app --timeout 1000
-resources:
-  cpu: 4
