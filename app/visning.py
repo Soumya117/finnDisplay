@@ -54,23 +54,21 @@ def filter_json(json_str, filter_date):
 def json_to_html(json_str):
     total = len(json_str['links'])
     tstr1 = """<p><font size="5" color="white">Total: {total} </font></p>
-    <table>""".format(total=total)
+    <table bgcolor="#2a3c3c" border="1px">""".format(total=total)
     for item in json_str['links']:
         map_link = "https://www.google.co.in/maps/place/"+item['details']['address']
         tstr2 = """
         <tr>
-        <th bgcolor="#2a3c3c" height="40" width="40%">
+        <th  height="60" width="18%">
         <a href="{link}" style="color:#FFFFFF;" target="_blank">{text}</a>
         </th>
-        <td height="40" bgcolor="#2a3c3c" style="padding-right: 25px;padding-left: 25px;">
+        <td height="40" width="15%" style="padding-right: 15px;padding-left: 15px;">
         <font size="3" color="white">
-        <a href="{map_link}" style="color:#FFFFFF;" target="_blank">{address}</a>
+        <a href="{map_link}" style="color:#FFFFFF;" target="_blank">{address}</a>, {area}, {price}
         </font>
         </td>
-        <td height="40" width="100" bgcolor="#2a3c3c" style="padding-right: 25px;padding-left: 25px;"><font size="3" color="white">{area}</font></td>
-        <td height="40" width="150" bgcolor="#2a3c3c" style="padding-right: 25px;padding-left: 25px;"><font size="3" color="white">{price}</font></td>
-        <td>
-        <table bgcolor="#2a3c3c">""".format(link=item['link'],
+        <td width="8%">
+        <table height="40">""".format(link=item['link'],
                                             address=item['details']['address'],
                                             text=item['details']['text'],
                                             area=item['details']['area'],
@@ -81,7 +79,7 @@ def json_to_html(json_str):
         for date in out:
             tstr3 = """
             <tr>
-            <td height="40"  width="300" style="padding-right: 25px;padding-left: 25px;"><font size="3" color="white">{date}</font></td>
+            <td style="padding-right: 15px;padding-left: 15px;"><font size="3" color="white">{date}</font></td>
             </tr>""".format(date=date)
             tstr1 += tstr3
         tstr4 = """
