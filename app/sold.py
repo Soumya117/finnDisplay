@@ -1,14 +1,14 @@
 import json
-import sys
 
-def filterJson(jsonStr, inputData):
-    result = {}
+
+def filter_json(json_str, input_data):
+    result = dict()
     result['links'] = []
-    data = json.loads(jsonStr)
+    data = json.loads(json_str)
     for item in data['links']:
         time = item['time'].split('T')
-        if inputData in time:
-            res = {}
+        if input_data in time:
+            res = dict()
             res['link'] = item['link']
             res['text'] = item['text']
             res['address'] = item['address']
@@ -18,16 +18,17 @@ def filterJson(jsonStr, inputData):
             result['links'].append(res)
     return result
 
-def jsonToHtml(jsonStr, blob_visning):
+
+def json_to_html(json_str, blob_visning):
     # reload(sys)
     # sys.setdefaultencoding('utf-8')
-    total = len(jsonStr['links'])
+    total = len(json_str['links'])
     visnings = json.loads(blob_visning)
-    tstr1 ="""<p><font size="5" color="white">Total: {total} </font></p>
+    tstr1 = """<p><font size="5" color="white">Total: {total} </font></p>
     <table>""".format(total=total)
 
-    for item in jsonStr["links"]:
-        #check if the link is present in the visnings.
+    for item in json_str["links"]:
+        # check if the link is present in the visnings.
         visning = {}
         for view in visnings['links']:
             if item['link'] in view['link']:
@@ -53,28 +54,29 @@ def jsonToHtml(jsonStr, blob_visning):
                        map_link=map_link)
         tstr1 += tstr2
         for date in visning:
-            tstr3="""
+            tstr3 = """
             <tr>
             <td height="40"  width="300" style="padding-right: 15px;padding-left: 15px;"><font size="3" color="white">{date}</font></td>
             </tr>""".format(date=date)
-            tstr1+=tstr3
-        tstr4="""
+            tstr1 += tstr3
+        tstr4 = """
         </table>
         </td>
         </tr>"""
-        tstr1+=tstr4
-    tstr6="""</table>"""
-    tstr1+=tstr6
+        tstr1 += tstr4
+    tstr6 = """</table>"""
+    tstr1 += tstr6
     return tstr1
 
-def createGmap(jsonStr):
-    result = {}
+
+def create_gmap(json_str):
+    result = dict()
     result['markers'] = []
     result['info'] = []
-    for item in jsonStr['links']:
+    for item in json_str['links']:
         add = item['address']
         map_link = "https://www.google.co.in/maps/place/"+item['address']
-        geoCode = item['geocode']
+        geo_code = item['geocode']
         info = """
         <div class="info_content" style="width:300px; margin: auto;">
         <h2>
@@ -88,11 +90,11 @@ def createGmap(jsonStr):
                          price=item['price'],
                          map_link=map_link,
                          link=item['link'])
-        geoCodeAddress = []
-        geoCodeAddress.append(item['address'])
-        geoCodeAddress.append(geoCode['lat'])
-        geoCodeAddress.append(geoCode['lng'])
+        geo_code_address = list()
+        geo_code_address.append(item['address'])
+        geo_code_address.append(geo_code['lat'])
+        geo_code_address.append(geo_code['lng'])
 
-        result['markers'].append(geoCodeAddress)
+        result['markers'].append(geo_code_address)
         result['info'].append(info)
     return result

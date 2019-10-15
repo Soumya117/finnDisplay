@@ -332,3 +332,110 @@ werkzeug.routing.BuildError: Could not build url for endpoint '' with values ['f
 2019-10-08 11:43:15,735 - file - DEBUG - Reading blob: sold.json
 2019-10-08 11:43:17,355 - file - DEBUG - Filtering jsons..!!
 2019-10-08 11:43:17,377 - file - DEBUG - Returning data...
+2019-10-15 15:14:32,986 - flask.app - ERROR - Exception on / [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/site-packages/azure/storage/storageclient.py", line 215, in _perform_request
+    self.authentication.sign_request(request)
+  File "/usr/local/lib/python3.6/site-packages/azure/storage/_auth.py", line 72, in sign_request
+    self._add_authorization_header(request, string_to_sign)
+  File "/usr/local/lib/python3.6/site-packages/azure/storage/_auth.py", line 51, in _add_authorization_header
+    signature = _sign_string(self.account_key, string_to_sign)
+  File "/usr/local/lib/python3.6/site-packages/azure/storage/_common_conversion.py", line 93, in _sign_string
+    key = _decode_base64_to_bytes(key)
+  File "/usr/local/lib/python3.6/site-packages/azure/storage/_common_conversion.py", line 83, in _decode_base64_to_bytes
+    return base64.b64decode(data)
+  File "/usr/lib/python3.6/base64.py", line 87, in b64decode
+    return binascii.a2b_base64(s)
+binascii.Error: Incorrect padding
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.6/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.6/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.6/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/usr/local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "./main.py", line 184, in render_graph
+    blob_links = read_blob('links.json')
+  File "./main.py", line 25, in read_blob
+    blob = block_blob_service.get_blob_to_text(container_name, blob_name)
+  File "/usr/local/lib/python3.6/site-packages/azure/storage/blob/baseblobservice.py", line 2246, in get_blob_to_text
+    timeout)
+  File "/usr/local/lib/python3.6/site-packages/azure/storage/blob/baseblobservice.py", line 2133, in get_blob_to_bytes
+    timeout)
+  File "/usr/local/lib/python3.6/site-packages/azure/storage/blob/baseblobservice.py", line 1932, in get_blob_to_stream
+    _context=operation_context)
+  File "/usr/local/lib/python3.6/site-packages/azure/storage/blob/baseblobservice.py", line 1659, in _get_blob
+    operation_context=_context)
+  File "/usr/local/lib/python3.6/site-packages/azure/storage/storageclient.py", line 279, in _perform_request
+    raise ex
+  File "/usr/local/lib/python3.6/site-packages/azure/storage/storageclient.py", line 251, in _perform_request
+    raise AzureException(ex.args[0])
+azure.common.AzureException: Incorrect padding
+2019-10-15 15:16:38,658 - matplotlib.legend - WARNING - No handles with labels found to put in legend.
+2019-10-15 15:16:39,763 - matplotlib.legend - WARNING - No handles with labels found to put in legend.
+2019-10-15 15:16:44,690 - flask.app - ERROR - Exception on /status/price [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.6/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.6/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.6/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/usr/local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "./main.py", line 152, in get_price
+    result['price']['table'] = multiplePris.jsonToHtml(filter_price, blob_visnings, blob_sold)
+AttributeError: module 'multiplePris' has no attribute 'jsonToHtml'
+2019-10-15 15:16:51,327 - flask.app - ERROR - Exception on /status/visnings [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.6/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.6/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.6/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/usr/local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "./main.py", line 107, in get_visnings
+    filter_visnings = visning.filterJson(blob_visnings, filter_date)
+AttributeError: module 'visning' has no attribute 'filterJson'
+2019-10-15 15:19:54,704 - matplotlib.legend - WARNING - No handles with labels found to put in legend.
+2019-10-15 15:19:55,777 - matplotlib.legend - WARNING - No handles with labels found to put in legend.
+2019-10-15 15:21:41,649 - flask.app - ERROR - Exception on /status/realestates [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.6/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.6/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.6/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/usr/local/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "./main.py", line 172, in get_realestates
+    filter_links = links.filterJson(blob_links, filter_date)
+AttributeError: module 'links' has no attribute 'filterJson'
+2019-10-15 15:26:22,698 - matplotlib.legend - WARNING - No handles with labels found to put in legend.
+2019-10-15 15:26:23,800 - matplotlib.legend - WARNING - No handles with labels found to put in legend.
+2019-10-15 15:30:17,639 - matplotlib.legend - WARNING - No handles with labels found to put in legend.
+2019-10-15 15:30:18,727 - matplotlib.legend - WARNING - No handles with labels found to put in legend.

@@ -1,14 +1,14 @@
 import json
-import sys
 
-def filterJson(jsonStr, inputData):
-    result = {}
+
+def filter_json(json_str, input_data):
+    result = dict()
     result['links'] = []
-    data = json.loads(jsonStr)
+    data = json.loads(json_str)
     for item in data['links']:
         time = item['time'].split('T')
-        if inputData in time:
-            res = {}
+        if input_data in time:
+            res = dict()
             res['link'] = item['link']
             res['details'] = {}
             res['details']['text'] = item['details']['text']
@@ -19,17 +19,15 @@ def filterJson(jsonStr, inputData):
             result['links'].append(res)
     return result
 
-def jsonToHtml(jsonStr, blob_visning, blob_sold):
-    # reload(sys)
-    # sys.setdefaultencoding('utf-8')
 
+def json_to_html(json_str, blob_visning, blob_sold):
     sold_houses = json.loads(blob_sold)
     visnings = json.loads(blob_visning)
-    total = len(jsonStr['links'])
-    tstr1 ="""<p><font size="5" color="white">Total: {total} </font></p>
+    total = len(json_str['links'])
+    tstr1 = """<p><font size="5" color="white">Total: {total} </font></p>
     <table bgcolor="#2a3c3c" border="1px">""".format(total=total)
-    for item in jsonStr['links']:
-        #check if the link is present in the visnings.
+    for item in json_str['links']:
+        # check if the link is present in the visnings.
         visning = {}
         sold = {}
         sold['status'] = ""
@@ -66,42 +64,43 @@ def jsonToHtml(jsonStr, blob_visning, blob_sold):
         for pris in out:
             price = pris['price']
             time = pris['time'].split('T')
-            tstr3="""
+            tstr3 = """
             <tr>
             <td style="padding-right: 15px;padding-left: 15px;"><font size="3" color="white">{price}</font></td>
             <td style="padding-right: 15px;padding-left: 15px;"><font size="3" color="white">{time}</font></td>
             </tr>""".format(price=price, time=time[0])
-            tstr1+=tstr3
-        tstr4="""</table></td>"""
-        tstr1+=tstr4
-        tstr1+= """<td width="10%"><table height="40">"""
+            tstr1 += tstr3
+        tstr4 = """</table></td>"""
+        tstr1 += tstr4
+        tstr1 += """<td width="10%"><table height="40">"""
         for date in visning:
-            tstr5="""
+            tstr5 = """
             <tr>
             <td style="padding-right: 15px;padding-left: 15px;"><font size="3" color="white">{date}</font></td>
             </tr>""".format(date=date)
-            tstr1+=tstr5
-        tstr6="""
+            tstr1 += tstr5
+        tstr6 = """
         </table>
         </td>
         <td  width="9%" style="padding-right: 15px;padding-left: 15px;">
         <font size="3" color="white">{status}&nbsp;&nbsp;{time}
         </font></td>
         </tr>""".format(status=sold['status'], time=sold['time'])
-        tstr1+=tstr6
-    tstr7="""
+        tstr1 += tstr6
+    tstr7 = """
     </table>"""
-    tstr1+=tstr7
+    tstr1 += tstr7
     return tstr1
 
-def createGmap(jsonStr):
+
+def create_gmap(json_str):
     result = {}
     result['markers'] = []
     result['info'] = []
-    for item in jsonStr['links']:
+    for item in json_str['links']:
         add = item['details']['address']
         map_link = "https://www.google.co.in/maps/place/"+item['details']['address']
-        geoCode = item['details']['geocode']
+        geo_code = item['details']['geocode']
         info = """
         <div class="info_content" style="width:300px; margin: auto;">
         <h2>
@@ -114,11 +113,11 @@ def createGmap(jsonStr):
                          area=item['details']['area'],
                          map_link=map_link,
                          link=item['link'])
-        geoCodeAddress = []
-        geoCodeAddress.append(item['details']['address'])
-        geoCodeAddress.append(geoCode['lat'])
-        geoCodeAddress.append(geoCode['lng'])
+        geo_code_address = []
+        geo_code_address.append(item['details']['address'])
+        geo_code_address.append(geo_code['lat'])
+        geo_code_address.append(geo_code['lng'])
 
-        result['markers'].append(geoCodeAddress)
+        result['markers'].append(geo_code_address)
         result['info'].append(info)
     return result

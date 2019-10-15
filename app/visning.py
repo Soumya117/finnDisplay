@@ -1,41 +1,43 @@
 import json
-import sys
 import datetime
 
-def parseDate(dateStr, inputDate):
-    #prepare proper date from the visning dates
+
+def parse_date(date_str, input_date):
+    # prepare proper date from the visning dates
     months = {
-		"januar" : 1,
-		"februar" : 2,
-		"mars" : 3,
-		"april" : 4,
-		"mai" : 5,
-		"juni" : 6,
-		"juli" : 7,
-		"august" : 8,
-		"september" : 9,
-		"oktober" : 10,
-		"november" : 11,
-		"desember" : 12
-	}
-    date = dateStr.split(", ")[0]
+        "januar": 1,
+        "februar": 2,
+        "mars": 3,
+        "april": 4,
+        "mai": 5,
+        "juni": 6,
+        "juli": 7,
+        "august": 8,
+        "september": 9,
+        "oktober": 10,
+        "november": 11,
+        "desember": 12
+    }
+
+    date = date_str.split(", ")[0]
     day = date.split(" ")
     now = datetime.datetime.now()
     month = str(months[day[2]])
-    tmpDate = day[1].strip('.') + " " + month + " " +  str(now.year)
-    finalDate = datetime.datetime.strptime(tmpDate, '%d %m %Y').strftime('%Y-%m-%d')
+    tmp_date = day[1].strip('.') + " " + month + " " + str(now.year)
+    final_date = datetime.datetime.strptime(tmp_date, '%d %m %Y').strftime('%Y-%m-%d')
 
-    if inputDate == finalDate:
+    if input_date == final_date:
         return True
 
-def filterJson(jsonStr, filterDate):
+
+def filter_json(json_str, filter_date):
     result = {}
     result['links'] = []
-    data = json.loads(jsonStr)
+    data = json.loads(json_str)
     for item in data['links']:
         upcoming = False
         for date in item['visnings']:
-            if parseDate(date, filterDate):
+            if parse_date(date, filter_date):
                 upcoming = True
                 break
         if upcoming:
@@ -51,13 +53,12 @@ def filterJson(jsonStr, filterDate):
             result['links'].append(res)
     return result
 
-def jsonToHtml(jsonStr):
-    # reload(sys)
-    # sys.setdefaultencoding('utf-8')
-    total = len(jsonStr['links'])
-    tstr1 ="""<p><font size="5" color="white">Total: {total} </font></p>
+
+def json_to_html(json_str):
+    total = len(json_str['links'])
+    tstr1 = """<p><font size="5" color="white">Total: {total} </font></p>
     <table>""".format(total=total)
-    for item in jsonStr['links']:
+    for item in json_str['links']:
         map_link = "https://www.google.co.in/maps/place/"+item['details']['address']
         tstr2 = """
         <tr>
@@ -81,26 +82,27 @@ def jsonToHtml(jsonStr):
         tstr1 += tstr2
         out = item['visnings']
         for date in out:
-            tstr3="""
+            tstr3 = """
             <tr>
             <td height="40"  width="300" style="padding-right: 25px;padding-left: 25px;"><font size="3" color="white">{date}</font></td>
             </tr>""".format(date=date)
-            tstr1+=tstr3
-        tstr4="""
+            tstr1 += tstr3
+        tstr4 = """
             </table>
             </td>
             </tr>"""
-        tstr1+=tstr4
-    tstr6="""
+        tstr1 += tstr4
+    tstr6 = """
     </table>"""
-    tstr1+=tstr6
+    tstr1 += tstr6
     return tstr1
 
-def createGmap(jsonStr):
+
+def create_gmap(json_str):
     result = {}
     result['markers'] = []
     result['info'] = []
-    for item in jsonStr['links']:
+    for item in json_str['links']:
         add = item['details']['address']
         map_link = "https://www.google.co.in/maps/place/"+item['details']['address']
         geoCode = item['details']['geocode']
@@ -117,11 +119,11 @@ def createGmap(jsonStr):
                          price=item['details']['price'],
                          map_link=map_link,
                          link=item['link'])
-        geoCodeAddress = []
-        geoCodeAddress.append(item['details']['address'])
-        geoCodeAddress.append(geoCode['lat'])
-        geoCodeAddress.append(geoCode['lng'])
+        geo_code_address = []
+        geo_code_address.append(item['details']['address'])
+        geo_code_address.append(geoCode['lat'])
+        geo_code_address.append(geoCode['lng'])
 
-        result['markers'].append(geoCodeAddress)
+        result['markers'].append(geo_code_address)
         result['info'].append(info)
     return result
