@@ -1,5 +1,6 @@
 import json
 import datetime
+from helpers.JsonUtil import JsonUtil
 
 
 def parse_date(date_str, input_date):
@@ -42,12 +43,8 @@ def filter_json(json_str, filter_date):
                 break
         if upcoming:
             res = {}
-            res['link'] = item['link']
             res['details'] = {}
-            res['details']['text'] = item['details']['text']
-            res['details']['address'] = item['details']['address']
-            res['details']['geocode'] = item['details']['geocode']
-            res['details']['area'] = item['details']['area']
+            JsonUtil(res, item).prepare_json(data=item['details'], output=res['details'])
             res['details']['price'] = item['details']['price']
             res['visnings'] = item['visnings']
             result['links'].append(res)
@@ -105,7 +102,7 @@ def create_gmap(json_str):
     for item in json_str['links']:
         add = item['details']['address']
         map_link = "https://www.google.co.in/maps/place/"+item['details']['address']
-        geoCode = item['details']['geocode']
+        geo_code = item['details']['geocode']
         info = """
         <div class="info_content" style="width:300px; margin: auto;">
         <h2>
@@ -121,8 +118,8 @@ def create_gmap(json_str):
                          link=item['link'])
         geo_code_address = []
         geo_code_address.append(item['details']['address'])
-        geo_code_address.append(geoCode['lat'])
-        geo_code_address.append(geoCode['lng'])
+        geo_code_address.append(geo_code['lat'])
+        geo_code_address.append(geo_code['lng'])
 
         result['markers'].append(geo_code_address)
         result['info'].append(info)

@@ -1,4 +1,5 @@
 import json
+from helpers.JsonUtil import JsonUtil
 
 
 def filter_json(json_str, input_data):
@@ -9,19 +10,12 @@ def filter_json(json_str, input_data):
         time = item['time'].split('T')
         if input_data in time:
             res = dict()
-            res['link'] = item['link']
-            res['text'] = item['text']
-            res['address'] = item['address']
-            res['area'] = item['area']
-            res['price'] = item['price']
-            res['geocode'] = item['geocode']
+            JsonUtil(res, item).prepare_json(price=item['price'])
             result['links'].append(res)
     return result
 
 
 def json_to_html(json_str, blob_visning):
-    # reload(sys)
-    # sys.setdefaultencoding('utf-8')
     total = len(json_str['links'])
     visnings = json.loads(blob_visning)
     tstr1 = """<p><font size="5" color="white">Total: {total} </font></p>

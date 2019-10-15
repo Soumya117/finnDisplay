@@ -1,4 +1,5 @@
 import json
+from helpers.JsonUtil import JsonUtil
 
 
 def filter_json(json_str, input_data):
@@ -9,12 +10,8 @@ def filter_json(json_str, input_data):
         time = item['time'].split('T')
         if input_data in time:
             res = dict()
-            res['link'] = item['link']
             res['details'] = {}
-            res['details']['text'] = item['details']['text']
-            res['details']['address'] = item['details']['address']
-            res['details']['area'] = item['details']['area']
-            res['details']['geocode'] = item['details']['geocode']
+            JsonUtil(res, item).prepare_json(data=item['details'], output=res['details'])
             res['price_list'] = item['price_list']
             result['links'].append(res)
     return result
