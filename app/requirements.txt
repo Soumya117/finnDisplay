@@ -1,5 +1,5 @@
 Flask==1.0.2
-Jinja2==2.10.1
+Jinja2==2.11.3
 azure-storage==0.34.3
 googlemaps==3.0.2
 gunicorn==19.5.0
