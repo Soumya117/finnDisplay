@@ -3,5 +3,5 @@ Jinja2==2.10.1
 azure-storage==0.34.3
 googlemaps==3.0.2
 gunicorn==19.5.0
-PyYAML==5.1.2
+PyYAML==5.4
 matplotlib==3.1.1
